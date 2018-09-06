@@ -22,7 +22,8 @@ namespace DAL
         new MessageGroup() { MessageError="זהירות אתה מתקרב לקראת התרחקות מהקבוצה",KodError=6},
         new MessageGroup() { MessageError="נפתחה קבוצתך שאליה אתה רשום",KodError=7},
         new MessageGroup() { MessageError="מטייל מבקש עזרה",KodError=8},
-        new MessageGroup() { MessageError="הודעה מותאמת אישית למטייל",KodError=9}};
+        new MessageGroup() { MessageError="מטייל הצטרף לקבוצת",KodError=9},
+        new MessageGroup() { MessageError="הודעה מותאמת אישית למטייל",KodError=10}};
 
         /// <summary>
         /// קבלת כל המשתמשים
