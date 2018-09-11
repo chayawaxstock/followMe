@@ -231,7 +231,9 @@ export class UsersServiceProvider {
 
   getMyMessage():Promise<any>
   {
-    return this.http.get(this.baseUrl+"CheckIfHaveMessage/"+this.getPhoneUser()).map(data=>data.json()).toPromise()
+    if(this.getPhoneUser())
+      return this.http.get(this.baseUrl+"CheckIfHaveMessage/"+this.getPhoneUser()).map(data=>data.json()).toPromise();
+    return null;
   }
 
   groupOfUserStatusFalse():Observable<any>

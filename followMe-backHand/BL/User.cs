@@ -104,9 +104,15 @@ namespace BL
             try
             {
                 UserProfile user = await conectDB.getUser(phone);
-                var allMessage = user.UserMessageNeedGet;
-                await conectDB.RemoveMessage(user);
+                var allMessage = new List<MessageUser>();
+                foreach (var item in user.UserMessageNeedGet)
+                {
+                    allMessage.Add(item);
+                } 
+               bool b= await conectDB.RemoveMessage(user);
+                if(b)
                 return allMessage;
+                return null;
             }
             catch (Exception)
             {

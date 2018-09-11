@@ -106,7 +106,7 @@ namespace DAL
         /// </summary>
         /// <param name="user">מטייל</param>
         /// <returns></returns>
-        async public static Task RemoveMessage(UserProfile user)
+        async public static Task<bool> RemoveMessage(UserProfile user)
         {
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("followMe");
@@ -116,10 +116,20 @@ namespace DAL
                 //TODO:הוספה לטבלת הסטוריה
             }
             user.UserMessageNeedGet.Clear();
-            var filter = Builders<UserProfile>.Filter.Eq("phone", user.phone);
-            var update = Builders<UserProfile>.Update.Set("UserMessageNeedGet", user.UserMessageNeedGet);
-            var result = await allUsers.UpdateOneAsync(filter, update);
+            try
+            {
+                var filter = Builders<UserProfile>.Filter.Eq("phone", user.phone);
+                var update = Builders<UserProfile>.Update.Set("UserMessageNeedGet", user.UserMessageNeedGet);
+                var result = await allUsers.UpdateOneAsync(filter, update);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
 
+            }
+           
+           
         }
 
 
@@ -165,6 +175,24 @@ namespace DAL
                 return false;
             var filter = Builders<UserProfile>.Filter.Eq("phone", user.phone);
             var update = Builders<UserProfile>.Update.Set("status", user.status);
+            await allUsers.UpdateOneAsync(filter, update);
+            return true;
+        }
+
+        /// <summary>
+        /// עדכון הודעות שהמשתמש צריך לקבל
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public async static Task<bool> UpdateUserMeesage(UserProfile user)
+        {
+            var client = new MongoClient("mongodb://localhost:27017");
+            var database = client.GetDatabase("followMe");
+            var allUsers = database.GetCollection<UserProfile>("users");
+            if (allUsers.Find(p => p.phone == user.phone) == null)
+                return false;
+            var filter = Builders<UserProfile>.Filter.Eq("phone", user.phone);
+            var update = Builders<UserProfile>.Update.Set("UserMessageNeedGet", user.UserMessageNeedGet);
             await allUsers.UpdateOneAsync(filter, update);
             return true;
         }
