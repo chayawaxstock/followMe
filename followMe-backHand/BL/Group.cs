@@ -55,7 +55,7 @@ namespace BL
                         }
                         
                     }
-                    if (d ==item.listManagment.Count(p=>p.ComeToTrip==true))//התרחק מכל המנהלי הקבוצה
+                    if (d ==item.listManagment.Count(p=>p.ComeToTrip==true))// התרחק מכל המנהלי הקבוצה
                         farGroup.Add(item);
                 }
                 farGroup.ForEach(async element => { await sendMessageFarGroup(element,user,5); });
@@ -250,7 +250,7 @@ namespace BL
             if (group != null)
             {
                 if (group.status == true&&thisGroup.status==false)
-                    await sendMessage(gr);
+                    await sendMessageOpenGroup(gr);
                 return gr;
             }
             return null;
@@ -363,45 +363,14 @@ namespace BL
             return true;
         }
 
-        private async static Task<bool> sendMessage(Group gr)
+        private async static Task<bool> sendMessageOpenGroup(Group gr)
         {
-            string message = "הודעה על פתיחת קבוצת";
             var users = await conectDB.getUserOfGroup(gr.password);
             foreach (var item in users)
             {
                 var user = await conectDB.getUser(item.UserPhoneGroup);
-                //if ((int)(user.kindMessage) == 2)
-                //{
-                //    await sendEmail(user, gr, message);
-                //}
-                //else if ((int)(user.kindMessage) == 3)
-                //    await SendSMS(user, gr, message);
-                //else if ((int)(user.kindMessage) == 4)
-                //    await SendWhatsapp(user, gr, message);
-                //else if ((int)(user.kindMessage) == 5)
-                //{
-                //    await sendEmail(user, gr, message);
-                //    await SendSMS(user, gr, message);
-                //}
-                //else if ((int)(user.kindMessage) == 6)
-                //{
-                //    await sendEmail(user, gr, message);
-                //    await SendWhatsapp(user, gr, message);
-                //}
-                //else if ((int)(user.kindMessage) == 7)
-                //{
-                //    await SendSMS(user, gr, message);
-                //    await SendWhatsapp(user, gr, message);
-                //}
-                //else
-                //{
-                //    await sendEmail(user, gr, message);
-                //    await SendSMS(user, gr, message);
-                //    await SendWhatsapp(user, gr, message);
-
-                //}
-                user.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = new MessageGroup() {KodError=2,MessageError=gr.ErrorMessage[2].MessageError } });
-
+                user.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = gr.ErrorMessage.Find(p=>p.KodError==3)});
+                await conectDB.UpdateUserMeesage(user);
             }
             return true;
         }
@@ -409,83 +378,12 @@ namespace BL
 
         private async static Task<bool> sendMessageFarGroup(Group gr,UserProfile user,int kodMess)//send message to all managment and user
         {
-           // string message = "התרחקת מקבוצת"+gr.name;
-           // string mesManagment = "זהירות מטייל התרחק מקבוצתך"+gr.name;
-           // await conectDB.setErrorInHistory(user,message,gr);
-            
-            //if ((int)(user.kindMessage) == 2)
-            //{
-            //   // await sendEmail(user, gr, gr.ErrorMessage.Where(p=>p.KodError==kodMess).ToList()[0].MessageError);
-            //}
-            //else if ((int)(user.kindMessage) == 3)
-            //  //  await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //else if ((int)(user.kindMessage) == 4)
-            //   // await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //else if ((int)(user.kindMessage) == 5)
-            //{
-            //   // await sendEmail(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //  //  await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //}
-            //else if ((int)(user.kindMessage) == 6)
-            //{
-            //  //  await sendEmail(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //   // await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //}
-            //else if ((int)(user.kindMessage) == 7)
-            //{
-            //   // await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //  //  await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //}
-            //else
-            //{
-            //   // await sendEmail(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //   // await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //   // await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //}
-            if(kodMess!=1)
-            {
-                //TODO:שמירה בדטה בייס
-                user.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = gr.ErrorMessage.Where(p => p.KodError == kodMess).First() });
-            }
+         
             user.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = gr.ErrorMessage.Where(p => p.KodError == kodMess).First() });
              await  conectDB.UpdateUserMeesage(user);
             foreach (var item in gr.listManagment)
             {
-                
                 UserProfile userManagment =await conectDB.getUser(item.phoneManagment);
-               // conectDB.setNewErrorToUser(userManagment, mesManagment,gr);
-                //if ((int)(userManagment.kindMessage) == 2)
-                //{
-                //   // await sendEmail(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess-4).ToList()[0].MessageError);
-                //}
-                //else if ((int)(userManagment.kindMessage) == 3)
-                //   // await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess-4).ToList()[0].MessageError);
-                //else if ((int)(userManagment.kindMessage) == 4)
-                //   // await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess-4).ToList()[0].MessageError);
-                //else if ((int)(userManagment.kindMessage) == 5)
-                //{
-                //   // await sendEmail(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess-4).ToList()[0].MessageError);
-                //   // await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess-4).ToList()[0].MessageError);
-                //}
-                //else if ((int)(userManagment.kindMessage) == 6)
-                //{
-                //   // await sendEmail(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess-4).ToList()[0].MessageError);
-                //   // await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess - 4).ToList()[0].MessageError);
-                //}
-                //else if ((int)(userManagment.kindMessage) == 7)
-                //{
-                //   // await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess - 4).ToList()[0].MessageError);
-                //   // await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess - 4).ToList()[0].MessageError);
-                //}
-                //else
-                //{
-                //  //  await sendEmail(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess - 4).ToList()[0].MessageError);
-                //   // await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess - 4).ToList()[0].MessageError);
-                //   // await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess - 4).ToList()[0].MessageError);
-
-                //}
-
-                //TODO:שמירה בדטה בייס
                 userManagment.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = gr.ErrorMessage.Where(p => p.KodError == kodMess - 4).First() });
                 await conectDB.UpdateUserMeesage(userManagment);
             }
