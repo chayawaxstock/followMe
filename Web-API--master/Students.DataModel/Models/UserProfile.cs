@@ -7,5 +7,6 @@ namespace Students.DataModel.Models
 {
     class UserProfile
     {
+
     }
 }
