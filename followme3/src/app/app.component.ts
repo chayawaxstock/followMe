@@ -23,6 +23,7 @@ import { AddNewGroupsPage } from '../pages/add-new-groups/add-new-groups';
 import { Geolocation } from '@ionic-native/geolocation';
 import { User } from '../../node_modules/firebase';
 import { Keyboard } from '@ionic-native/keyboard';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 export interface MenuItem {
   title: string;
@@ -35,6 +36,7 @@ export interface MenuItem {
   templateUrl: 'app.html'
 })
 export class MyApp {
+
   loading: any;
   cart: any;
 
@@ -56,7 +58,8 @@ export class MyApp {
     private userService: UsersServiceProvider,
     private nativeStorage: NativeStorage,
     private loader: LoadingController,
-    public keyboard: Keyboard) {
+    public keyboard: Keyboard,
+    private localNotifications: LocalNotifications) {
     this.showLoader();
     this.checkStorage();
     this.initializeApp();
@@ -91,6 +94,8 @@ export class MyApp {
    
 
     this.platform.ready().then(() => {
+    
+
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       // this.platform.setDir();
@@ -127,10 +132,15 @@ export class MyApp {
       },err=>{console.log("error update location" )}).catch((error) => {
         console.log('Error getting location', error);
       });
+
       this.userService.CheckDistance().then(p => { console.log(p+" CheckDistance") },err=>{console.log(err)}).catch(error=>{console.log(error)});
+
       this.userService.getMyMessage().then(mes=>{
+        this.addNotification();
           console.log(mes+" getMyMessage");
+
       },err=>console.log(err)).catch(err=>{"לא היתה אפשרות לקבלת ההדעות שנשלחו למשתמש"})
+
     }, 60000);
   
     // let watch = this.geolocation.watchPosition();
@@ -204,5 +214,15 @@ export class MyApp {
       }
     }, (eror) => {alert("שגיאה בקבלת הקבוצות שהמשתמש רשום עליהם");
       this.loading.dismiss();})
+  }
+
+  addNotification() {
+    let notification = {
+      id: 1,
+      title: 'Hey!',
+      text: 'You just got notified :)'
+  };
+
+ 
   }
 }

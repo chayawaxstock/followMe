@@ -24,7 +24,7 @@
     "@angular/router": "^6.0.7",
     "@ionic-native/camera": "^4.7.0",
     "@ionic-native/camera-preview": "^4.9.2",
-    "@ionic-native/core": "4.7.0",
+    "@ionic-native/core": "^4.12.2",
     "@ionic-native/date-picker": "^4.11.0",
     "@ionic-native/device-accounts": "^4.7.0",
     "@ionic-native/diagnostic": "^4.9.2",
