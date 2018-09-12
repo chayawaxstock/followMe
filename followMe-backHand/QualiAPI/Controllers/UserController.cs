@@ -19,7 +19,12 @@ namespace QualiAPI.Controllers
       public double   lat;
      public double lng;
     }
-        [HttpPost]
+        /// <summary>
+        /// עדכון מקום למשתמש
+        /// </summary>
+        /// <param name="mar">טלפון+מקום בנקודות</param>
+        /// <returns></returns>
+    [HttpPost]
     [EnableCors("*","*","*")]
     [Route("api/updateMarker")]
         public async Task< IHttpActionResult> UpdateMarker([FromBody] help mar)
@@ -35,7 +40,11 @@ namespace QualiAPI.Controllers
             }
         }
 
-
+        /// <summary>
+        /// קבלת כל המשתמשים של קבוצה מסוימת
+        /// </summary>
+        /// <param name="pass">סיסמת קבוצה</param>
+        /// <returns></returns>
     [HttpGet]
     [EnableCors("*", "*", "*")]
     [Route("api/getAllUsers/{pass}")]
@@ -51,7 +60,11 @@ namespace QualiAPI.Controllers
         return Content(HttpStatusCode.BadRequest, ex.Message);
       }
     }
-
+        /// <summary>
+        /// בדיקת קבוצה
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
     [HttpGet]
     [EnableCors("*", "*", "*")]
     [Route("api/checkOpenGroupAndConfirm/{phone}")]

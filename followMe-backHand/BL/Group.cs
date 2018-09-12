@@ -13,9 +13,9 @@ using System.Net;
 using System.Data;
 using System.Xml;
 using System.Device.Location;
-using Twilio.Clients;
+
 using DAL.Models;
-using WhatsAppApi;
+
 
 namespace BL
 {
@@ -309,42 +309,42 @@ namespace BL
 
         }
 
-        public async static Task<bool> SendWhatsapp(UserProfile user, Group group,string messsage)
-        {
-            bool b = true;
-            //TODO:צריך לשנות שיעבוד על באמת
+        //public async static Task<bool> SendWhatsapp(UserProfile user, Group group,string messsage)
+        //{
+        //    bool b = true;
+        //    //TODO:צריך לשנות שיעבוד על באמת
 
-            WhatsApp wa = new WhatsApp("0556777462", group.password, group.name, true);
-            wa.OnConnectSuccess += () =>
-            {
+        //    WhatsApp wa = new WhatsApp("0556777462", group.password, group.name, true);
+        //    wa.OnConnectSuccess += () =>
+        //    {
 
-                wa.OnLoginSuccess += (phonenumber, data) =>
-                {
-                    wa.SendMessage(user.phone, messsage);
+        //        wa.OnLoginSuccess += (phonenumber, data) =>
+        //        {
+        //            wa.SendMessage(user.phone, messsage);
                     
-                };
-                wa.OnLoginFailed += (data) =>
-                {
+        //        };
+        //        wa.OnLoginFailed += (data) =>
+        //        {
                     
-                };
-                try
-                {
-                    wa.Login();
-                }
-                catch (Exception ex)
-                {
+        //        };
+        //        try
+        //        {
+        //            wa.Login();
+        //        }
+        //        catch (Exception ex)
+        //        {
                    
-                }
-            };
+        //        }
+        //    };
 
 
-            wa.OnConnectFailed += (ex) =>
-            {
+        //    wa.OnConnectFailed += (ex) =>
+        //    {
                 
-            };
-            wa.Connect();
-            return true;
-        }
+        //    };
+        //    wa.Connect();
+        //    return true;
+        //}
 
        
 
@@ -370,36 +370,37 @@ namespace BL
             foreach (var item in users)
             {
                 var user = await conectDB.getUser(item.UserPhoneGroup);
-                if ((int)(user.kindMessage) == 2)
-                {
-                    await sendEmail(user, gr, message);
-                }
-                else if ((int)(user.kindMessage) == 3)
-                    await SendSMS(user, gr, message);
-                else if ((int)(user.kindMessage) == 4)
-                    await SendWhatsapp(user, gr, message);
-                else if ((int)(user.kindMessage) == 5)
-                {
-                    await sendEmail(user, gr, message);
-                    await SendSMS(user, gr, message);
-                }
-                else if ((int)(user.kindMessage) == 6)
-                {
-                    await sendEmail(user, gr, message);
-                    await SendWhatsapp(user, gr, message);
-                }
-                else if ((int)(user.kindMessage) == 7)
-                {
-                    await SendSMS(user, gr, message);
-                    await SendWhatsapp(user, gr, message);
-                }
-                else
-                {
-                    await sendEmail(user, gr, message);
-                    await SendSMS(user, gr, message);
-                    await SendWhatsapp(user, gr, message);
+                //if ((int)(user.kindMessage) == 2)
+                //{
+                //    await sendEmail(user, gr, message);
+                //}
+                //else if ((int)(user.kindMessage) == 3)
+                //    await SendSMS(user, gr, message);
+                //else if ((int)(user.kindMessage) == 4)
+                //    await SendWhatsapp(user, gr, message);
+                //else if ((int)(user.kindMessage) == 5)
+                //{
+                //    await sendEmail(user, gr, message);
+                //    await SendSMS(user, gr, message);
+                //}
+                //else if ((int)(user.kindMessage) == 6)
+                //{
+                //    await sendEmail(user, gr, message);
+                //    await SendWhatsapp(user, gr, message);
+                //}
+                //else if ((int)(user.kindMessage) == 7)
+                //{
+                //    await SendSMS(user, gr, message);
+                //    await SendWhatsapp(user, gr, message);
+                //}
+                //else
+                //{
+                //    await sendEmail(user, gr, message);
+                //    await SendSMS(user, gr, message);
+                //    await SendWhatsapp(user, gr, message);
 
-                }
+                //}
+                user.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = new MessageGroup() {KodError=2,MessageError=gr.ErrorMessage[2].MessageError } });
 
             }
             return true;
