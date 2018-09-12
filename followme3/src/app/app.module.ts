@@ -34,7 +34,7 @@ import { AngularFireDatabaseModule } from "angularfire2/database";
 
 import { EnterGroupPage } from '../pages/enter-group/enter-group';
 import {Sim} from '@ionic-native/sim'
-
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HomeManagmentPage } from '../pages/home-managment/home-managment';
 import{ AnimateItemSlidingDirective} from '../directives/animate-item-sliding/animate-item-sliding';
@@ -85,6 +85,7 @@ const firebaseConfig = {
   ],
   providers: [
     StatusBar,
+    LocalNotifications ,
     NativeStorage,
     SplashScreen,
     Camera,
