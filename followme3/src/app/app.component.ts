@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Nav, Platform, LoadingController } from 'ionic-angular';
+import { Nav, Platform, LoadingController, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
@@ -47,6 +47,7 @@ export class MyApp {
   groupNow: group;
   pages: Array<MenuItem>;
   allGroup: group[];
+  notifications: any[] = [];
 
   constructor(public platform: Platform,
     public statusBar: StatusBar,
@@ -59,7 +60,8 @@ export class MyApp {
     private nativeStorage: NativeStorage,
     private loader: LoadingController,
     public keyboard: Keyboard,
-    private localNotifications: LocalNotifications) {
+    private localNotifications: LocalNotifications,
+    private alertCtrl:AlertController) {
     this.showLoader();
     this.checkStorage();
     this.initializeApp();
@@ -136,7 +138,7 @@ export class MyApp {
       this.userService.CheckDistance().then(p => { console.log(p+" CheckDistance") },err=>{console.log(err)}).catch(error=>{console.log(error)});
 
       this.userService.getMyMessage().then(mes=>{
-        this.addNotification();
+        this.addNotification(mes);
           console.log(mes+" getMyMessage");
 
       },err=>console.log(err)).catch(err=>{"לא היתה אפשרות לקבלת ההדעות שנשלחו למשתמש"})
@@ -216,13 +218,28 @@ export class MyApp {
       this.loading.dismiss();})
   }
 
-  addNotification() {
-    let notification = {
-      id: 1,
-      title: 'Hey!',
-      text: 'You just got notified :)'
-  };
+  addNotification(text:string) {
 
- 
+    this.localNotifications.schedule({
+      text: text,
+     
+      led: 'FF0000',
+      sound: this.setSound(),
+   });
+
+   let alert = this.alertCtrl.create({
+     title: 'Congratulation!',
+     subTitle: 'Notification setup successfully ',
+     buttons: ['OK']
+   });
+   alert.present();
+  }
+
+  setSound() {
+    if (this.platform.is('android')) {
+      return 'file://assets/sounds/Rooster.mp3'
+    } else {
+      return 'file://assets/sounds/Rooster.caf'
+    }
   }
 }
