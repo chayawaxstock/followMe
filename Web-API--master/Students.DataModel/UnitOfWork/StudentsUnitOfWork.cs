@@ -24,7 +24,7 @@ namespace Students.DataModel.UnitOfWork
             get
             {
                 if (_students == null)
-                    _students = new StudentRepository<Student>(_database, "students");
+                    _students = new StudentRepository<Student>(_database, "followMe");
 
                 return _students;
             }
