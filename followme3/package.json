@@ -32,6 +32,7 @@
     "@ionic-native/geolocation": "^4.7.0",
     "@ionic-native/google-plus": "^4.7.0",
     "@ionic-native/keyboard": "^4.8.0",
+    "@ionic-native/local-notifications": "^4.12.2",
     "@ionic-native/native-storage": "^4.8.0",
     "@ionic-native/network": "^4.10.1",
     "@ionic-native/sim": "^4.12.0",
