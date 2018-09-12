@@ -24,6 +24,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { User } from '../../node_modules/firebase';
 import { Keyboard } from '@ionic-native/keyboard';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import * as moment from 'moment';
 
 export interface MenuItem {
   title: string;
@@ -48,6 +49,7 @@ export class MyApp {
   pages: Array<MenuItem>;
   allGroup: group[];
   notifications: any[] = [];
+  notifyTime = moment(new Date()).format();
 
   constructor(public platform: Platform,
     public statusBar: StatusBar,
@@ -218,17 +220,17 @@ export class MyApp {
       this.loading.dismiss();})
   }
 
-  addNotification(text:string) {
-
+  addNotification(text:string) {//notification
+   
     this.localNotifications.schedule({
       text: text,
-     
       led: 'FF0000',
+      smallIcon: 'res://calendar',
       sound: this.setSound(),
    });
 
    let alert = this.alertCtrl.create({
-     title: 'Congratulation!',
+     title: text,
      subTitle: 'Notification setup successfully ',
      buttons: ['OK']
    });
