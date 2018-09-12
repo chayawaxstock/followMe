@@ -88,6 +88,7 @@ export class MyApp {
   }
 
   initializeApp() {
+   
 
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -97,7 +98,8 @@ export class MyApp {
       this.statusBar.overlaysWebView(true);
       //this.splashScreen.hide();
       this.zone.run(() => {
-      });
+      }); 
+      this.keyboard.show();
       this.keyboard.disableScroll(false);
     });
   }
