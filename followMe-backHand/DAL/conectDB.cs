@@ -32,12 +32,13 @@ namespace DAL
         static async public Task<List<UserProfile>> getAllUsers()
         {
             var client = new MongoClient("mongodb://localhost:27017");
-
             var database = client.GetDatabase("followMe");
             var userCollection = database.GetCollection<UserProfile>("users");
             var users = await userCollection.Find(a => true).ToListAsync();
             return users;
         }
+
+
         /// <summary>
         /// קבלת משתמש
         /// </summary>
