@@ -219,10 +219,35 @@ namespace QualiAPI.Controllers
         }
 
         /// <summary>
-        /// נקודות של קבוצה מסוימת
+        /// נקודות של מנהלי קבוצה מסוימת
         /// </summary>
         /// <param name="pass"></param>
         /// <returns></returns>
+        [HttpPost]
+        [Route("api/getManagmentsMarker")]
+        public async Task<IHttpActionResult> getManagmentsMarker([FromBody] Group pass)
+        {
+            try
+            {
+                var g = await BL.GroupS.getGroupByPass(pass.password);
+                List<string> users = g.listManagment.Select(p => p.phoneManagment).ToList();
+                List<Marker> markers = new List<Marker>();
+                foreach (var item in users)
+                {
+                    UserProfile user = await conectDB.getUser(item);
+                    if (user != null)
+                        markers.Add(user.marker);
+                }
+
+
+                return Ok(markers);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+        }
+
         [HttpPost]
         [Route("api/getUsersMarker")]
         public async Task<IHttpActionResult> getUsersMarker([FromBody] Group pass)
@@ -247,6 +272,7 @@ namespace QualiAPI.Controllers
                 return Content(HttpStatusCode.BadRequest, ex.Message);
             }
         }
+
 
 
 
