@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  followme.api:
+    image: ${DOCKER_REGISTRY}followmeapi
+    build:
+      context: .\FollowMe.Api
+      dockerfile: Dockerfile
