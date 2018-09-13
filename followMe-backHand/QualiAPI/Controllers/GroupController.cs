@@ -81,7 +81,7 @@ namespace QualiAPI.Controllers
                     await BL.GroupS.AddToGroup(kod, phone);
                     return Ok(gro);
                 }
-                return Content(HttpStatusCode.BadRequest,"לא היתה אפשרות להצטרף לקבוצה")
+                return Content(HttpStatusCode.BadRequest, "לא היתה אפשרות להצטרף לקבוצה");
             }
             catch (Exception ex)
             {
