@@ -441,11 +441,11 @@ namespace BL
             //   // await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
             //   // await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
             //}
-            if(kodMess!=1)
-            {
-                //TODO:שמירה בדטה בייס
-                user.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = gr.ErrorMessage.Where(p => p.KodError == kodMess).First() });
-            }
+            //if(kodMess!=1)
+            //{
+            //    //TODO:שמירה בדטה בייס
+            //    user.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = gr.ErrorMessage.Where(p => p.KodError == kodMess).First() });
+            //}
             user.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = gr.ErrorMessage.Where(p => p.KodError == kodMess).First() });
              await  conectDB.UpdateUserMeesage(user);
             foreach (var item in gr.listManagment)
