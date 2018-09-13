@@ -95,7 +95,7 @@ namespace BL
             List<Group> all = await conectDB.getAllGroup();
             foreach (var item in all)
             {
-                if (item.Kod == kod)
+                if (item.Kod == kod&&item.DateEndTrip>=DateTime.Now)
                     return item;
             }
             return new Group();
@@ -378,48 +378,7 @@ namespace BL
 
         private async static Task<bool> sendMessageFarGroup(Group gr,UserProfile user,int kodMess)//send message to all managment and user
         {
-<<<<<<< HEAD
-           // string message = "התרחקת מקבוצת"+gr.name;
-           // string mesManagment = "זהירות מטייל התרחק מקבוצתך"+gr.name;
-           // await conectDB.setErrorInHistory(user,message,gr);
-            
-            //if ((int)(user.kindMessage) == 2)
-            //{
-            //   // await sendEmail(user, gr, gr.ErrorMessage.Where(p=>p.KodError==kodMess).ToList()[0].MessageError);
-            //}
-            //else if ((int)(user.kindMessage) == 3)
-            //  //  await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //else if ((int)(user.kindMessage) == 4)
-            //   // await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //else if ((int)(user.kindMessage) == 5)
-            //{
-            //   // await sendEmail(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //  //  await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //}
-            //else if ((int)(user.kindMessage) == 6)
-            //{
-            //  //  await sendEmail(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //   // await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //}
-            //else if ((int)(user.kindMessage) == 7)
-            //{
-            //   // await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //  //  await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //}
-            //else
-            //{
-            //   // await sendEmail(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //   // await SendSMS(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //   // await SendWhatsapp(user, gr, gr.ErrorMessage.Where(p => p.KodError == kodMess).ToList()[0].MessageError);
-            //}
-            //if(kodMess!=1)
-            //{
-            //    //TODO:שמירה בדטה בייס
-            //    user.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = gr.ErrorMessage.Where(p => p.KodError == kodMess).First() });
-            //}
-=======
-         
->>>>>>> b34e2a1ee8ff0434675b06fd7f5abf958237982b
+
             user.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = gr.ErrorMessage.Where(p => p.KodError == kodMess).First() });
              await  conectDB.UpdateUserMeesage(user);
             foreach (var item in gr.listManagment)

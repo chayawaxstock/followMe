@@ -218,6 +218,7 @@ namespace DAL
                     user.marker = new Marker();
                     user.marker.name = user.firstName + " " + user.lastName;
                     user.id = ObjectId.GenerateNewId();
+                    user.UserMessageNeedGet = new List<MessageUser>();
                     await userCollection.InsertOneAsync(user);
                     return true;
                 }
