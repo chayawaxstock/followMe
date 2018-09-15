@@ -137,11 +137,17 @@ export class MyApp {
         console.log('Error getting location', error);
       });
 
-      this.userService.CheckDistance().then(p => { console.log(p+" CheckDistance") },err=>{console.log(err)}).catch(error=>{console.log(error)});
+      this.userService.CheckDistance().then(p => { console.log(p+" CheckDistance") }).catch(error=>{console.log(error)});
 
       this.userService.getMyMessage().then((mes:MessObject[])=>{
-         console.log( mes[0]);
-        this.addNotification(mes);
+        mes.forEach(element => {
+          let massage=element.Message.MessageError;
+          let titleMessage=element.Group.name;
+          if(element.Message.KodError==1)
+          massage+="מטייל: "+element.UserName;
+           this.addNotification(titleMessage,massage);
+         });
+        
         
 
       },err=>console.log(err)).catch(err=>{"לא היתה אפשרות לקבלת ההדעות שנשלחו למשתמש"})
@@ -221,18 +227,19 @@ export class MyApp {
       this.loading.dismiss();})
   }
 
-  addNotification(mess) {//notification
+  addNotification(title,message) {//notification
    
     this.localNotifications.schedule({
-      text: mess["Message"]["MessageError"],
+      title:title,
+      text: message,
       led: 'FF0000',
       smallIcon: 'res://calendar',
       sound: this.setSound(),
    });
 
    let alert = this.alertCtrl.create({
-     title: mess,
-     subTitle: 'Notification setup successfully ',
+     title: title,
+     subTitle: 'Notification setup successfully '+message,
      buttons: ['OK']
    });
    alert.present();

@@ -68,10 +68,13 @@ export class MapPage {
   myAddMarker=()=> {
 
     var iconBase = '../../assets/imgs/trip1.png';
+    this.geolocation.getCurrentPosition({ maximumAge: 3600, timeout: 5000, enableHighAccuracy: true }).then((resp) => {
+      let updatelocation = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+      this.addMarker(updatelocation);
+    })
+
     this.userService.getMarkerManagments(this.group).then(res => {
-      
       this.deleteMarkers();
-      
      let markers = res;
      markers.forEach(element => {
        if (element.name.substring(element.name.length - 10) != this.userService.getPhoneUser()) {
@@ -141,7 +144,7 @@ export class MapPage {
     
   }
 
-  mapmap()
+  mapInterval()
   {
      setInterval(this.myAddMarker, 20000);
   }
@@ -162,7 +165,7 @@ export class MapPage {
       });
       this.addMarker(mylocation);
 
-      this.mapmap();
+      this.mapInterval();
     });
 
 
