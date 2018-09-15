@@ -10,7 +10,7 @@ import { MapPage } from '../pages/map/map';
 import { GroupPage } from '../pages/group/group';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { ShowDitailGroupPage } from '../pages/show-ditail-group/show-ditail-group';
-import { UsersServiceProvider, group, marker } from '../providers/users-service/users-service';
+import { UsersServiceProvider, group, marker, MessObject } from '../providers/users-service/users-service';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { AddUserToGroupPage } from '../pages/add-user-to-group/add-user-to-group';
 import { OpenPage } from '../pages/open/open';
@@ -139,10 +139,11 @@ export class MyApp {
 
       this.userService.CheckDistance().then(p => { console.log(p+" CheckDistance") },err=>{console.log(err)}).catch(error=>{console.log(error)});
 
-      this.userService.getMyMessage().then(mes=>{
+      this.userService.getMyMessage().then((mes:MessObject)=>{
         console.log(JSON.stringify(mes));
+        console.log( mes["Message"]["MessageError"]);
         this.addNotification(mes);
-          console.log(mes+" getMyMessage");
+        
 
       },err=>console.log(err)).catch(err=>{"לא היתה אפשרות לקבלת ההדעות שנשלחו למשתמש"})
 
@@ -221,17 +222,17 @@ export class MyApp {
       this.loading.dismiss();})
   }
 
-  addNotification(text:string) {//notification
+  addNotification(mess) {//notification
    
     this.localNotifications.schedule({
-      text: text,
+      text: mess["Message"]["MessageError"],
       led: 'FF0000',
       smallIcon: 'res://calendar',
       sound: this.setSound(),
    });
 
    let alert = this.alertCtrl.create({
-     title: text,
+     title: mess,
      subTitle: 'Notification setup successfully ',
      buttons: ['OK']
    });

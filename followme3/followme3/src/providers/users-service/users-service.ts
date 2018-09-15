@@ -5,10 +5,20 @@ import { DateTime } from 'ionic-angular/umd';
 import { Http } from '@angular/http';
 import { Observable, Subject } from 'rxjs';
 
-export interface RootObject {
+export interface Message {
+  KodError: number;
+  MessageError: string;
+}
+
+export interface MessObject {
   Message: Message;
-  Group: Group;
-  User?: any;
+  Group: group;
+  UserName: string;
+}
+
+export interface ErrorMessage {
+  KodError: number;
+  MessageError: string;
 }
 
 export class User {

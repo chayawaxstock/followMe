@@ -143,7 +143,7 @@ export class MapPage {
 
   mapmap()
   {
-     setInterval(this.myAddMarker, 5000);
+     setInterval(this.myAddMarker, 20000);
   }
 
 
