@@ -11,7 +11,7 @@ namespace DAL.Models
   {
     public MessageGroup Message { get; set; }
     public Group Group { get; set; }
-    public UserProfile user { get; set; }
+    public UserProfile User { get; set; }
 
     }
 }
