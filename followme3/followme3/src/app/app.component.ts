@@ -140,6 +140,7 @@ export class MyApp {
       this.userService.CheckDistance().then(p => { console.log(p+" CheckDistance") },err=>{console.log(err)}).catch(error=>{console.log(error)});
 
       this.userService.getMyMessage().then(mes=>{
+        console.log(JSON.stringify(mes));
         this.addNotification(mes);
           console.log(mes+" getMyMessage");
 

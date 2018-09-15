@@ -5,6 +5,11 @@ import { DateTime } from 'ionic-angular/umd';
 import { Http } from '@angular/http';
 import { Observable, Subject } from 'rxjs';
 
+export interface RootObject {
+  Message: Message;
+  Group: Group;
+  User?: any;
+}
 
 export class User {
   id?: number;
