@@ -36,7 +36,7 @@ export class MapPage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   markers = [];
-
+  timeUpload:number=0;
   group: group;
   loading: any;
   constructor(public navCtrl: NavController,
@@ -67,16 +67,24 @@ export class MapPage {
 
   myAddMarker=()=> {
 
-    var iconBase = '../../assets/imgs/trip1.png';
+
+
+    var iconUser = '../../assets/imgs/trip1.png';
+    var iconManagment= "../../assets/imgs/managmentIcon.png";
    
      
     this.userService.getMarkerManagments(this.group).then(res => {
       this.deleteMarkers();
      let markers = res;
      markers.forEach(element => {
-      
+      var icon = {
+    url: iconManagment, // url
+    scaledSize: new google.maps.Size(35, 35), // scaled size
+    origin: new google.maps.Point(0,0), // origin
+    anchor: new google.maps.Point(0, 0) // anchor
+};
          var myCenter: any = new google.maps.LatLng(element.lat, element.lng);
-         var marker = new google.maps.Marker({ position: myCenter,icon:iconBase });
+         var marker = new google.maps.Marker({ position: myCenter ,icon:icon});
          marker.setMap(this.map);
          this.markers.push(marker);
          google.maps.event.addListener(marker, 'click',  () => {
@@ -100,9 +108,14 @@ export class MapPage {
      this.userService.getMarkerUsers(this.group).then(res => {
       let markers = res;
       markers.forEach(element => {
-       
+        var icon = {
+          url: iconUser, // url
+          scaledSize: new google.maps.Size(35, 35), // scaled size
+          origin: new google.maps.Point(0,0), // origin
+          anchor: new google.maps.Point(0, 0) // anchor
+      };
           var myCenter: any = new google.maps.LatLng(element.lat, element.lng);
-          var marker = new google.maps.Marker({ position: myCenter });
+          var marker = new google.maps.Marker({ position: myCenter ,icon:icon});
           marker.setMap(this.map);
           this.markers.push(marker);
           google.maps.event.addListener(marker, 'click',  () => {
@@ -140,9 +153,11 @@ export class MapPage {
      console.log(err)
    }
    );
-
-
-    
+if(this.timeUpload==0)
+{
+  this.loading.dismiss();
+  this.timeUpload++;
+   } 
   }
 
   mapInterval()
@@ -189,7 +204,7 @@ export class MapPage {
       this.navCtrl.setRoot(HomePage);
       this.navCtrl.push(GroupPage);
     }
-   // this.showLoader();
+    this.showLoader();
     this.initMap();
 
   }
