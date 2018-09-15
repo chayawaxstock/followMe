@@ -68,49 +68,50 @@ export class MapPage {
   myAddMarker=()=> {
 
     var iconBase = '../../assets/imgs/trip1.png';
-    this.geolocation.getCurrentPosition({ maximumAge: 3600, timeout: 5000, enableHighAccuracy: true }).then((resp) => {
-      let updatelocation = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
-      this.addMarker(updatelocation);
-    })
-
+   
+     
     this.userService.getMarkerManagments(this.group).then(res => {
       this.deleteMarkers();
      let markers = res;
      markers.forEach(element => {
-       if (element.name.substring(element.name.length - 10) != this.userService.getPhoneUser()) {
+      
          var myCenter: any = new google.maps.LatLng(element.lat, element.lng);
          var marker = new google.maps.Marker({ position: myCenter,icon:iconBase });
          marker.setMap(this.map);
          this.markers.push(marker);
          google.maps.event.addListener(marker, 'click',  () => {
+          let infor=element.name.substring(0, element.name.length - 11) +'מנהל טיול'+ '<input id="aaasss" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/>';
+          if (element.name.substring(element.name.length - 10) == this.userService.getPhoneUser()) 
+               infor="אני <p id='aaasss'><p/>";
            var infowindow = new google.maps.InfoWindow({
-             content: element.name.substring(0, element.name.length - 11) +'מנהל טיול'+ '<input id="aaasss" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/>'
+             content: infor
            });
 
            infowindow.open(this.map, marker);
            google.maps.event.addListenerOnce(infowindow, 'domready', () => {
              document.getElementById('aaasss').addEventListener('click', () => {
-
-        
                this.navCtrl.push(ShowDitailUserPage);
              });
            });
          });
-       }
+       
      });
 
      this.userService.getMarkerUsers(this.group).then(res => {
       let markers = res;
       markers.forEach(element => {
-        if (element.name.substring(element.name.length - 10) != this.userService.getPhoneUser()) {
+       
           var myCenter: any = new google.maps.LatLng(element.lat, element.lng);
           var marker = new google.maps.Marker({ position: myCenter });
           marker.setMap(this.map);
           this.markers.push(marker);
           google.maps.event.addListener(marker, 'click',  () => {
-            var infowindow = new google.maps.InfoWindow({
-              content: element.name.substring(0, element.name.length - 11) + '<input id="aaasss" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/>'
-            });
+            let infor=element.name.substring(0, element.name.length - 11) + '<input id="aaasss" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/>';
+          if (element.name.substring(element.name.length - 10) == this.userService.getPhoneUser()) 
+             infor="אני <p id='aaasss'><p/>";
+           var infowindow = new google.maps.InfoWindow({
+             content: infor
+           });
 
             infowindow.open(this.map, marker);
             google.maps.event.addListenerOnce(infowindow, 'domready', () => {
@@ -121,7 +122,7 @@ export class MapPage {
               });
             });
           });
-        }
+        
       });
     }, err => {
       this.loading.dismiss();
