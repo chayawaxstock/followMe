@@ -139,9 +139,8 @@ export class MyApp {
 
       this.userService.CheckDistance().then(p => { console.log(p+" CheckDistance") },err=>{console.log(err)}).catch(error=>{console.log(error)});
 
-      this.userService.getMyMessage().then((mes:MessObject)=>{
-        console.log(JSON.stringify(mes));
-        console.log( mes["Message"]["MessageError"]);
+      this.userService.getMyMessage().then((mes:MessObject[])=>{
+         console.log( mes[0]);
         this.addNotification(mes);
         
 

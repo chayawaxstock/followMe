@@ -111,7 +111,6 @@ namespace QualiAPI.Controllers
             {
 
                 List<MessageUser> messages = await BL.User.getAllMessageUser(phone);
-                UserProfile p =await conectDB.getUser(phone);
                 return Ok(messages);
             }
             catch (Exception ex)
