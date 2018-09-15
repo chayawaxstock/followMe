@@ -378,7 +378,7 @@ namespace BL
 
         private async static Task<bool> sendMessageFarGroup(Group gr,UserProfile user,int kodMess)//send message to all managment and user
         {
-
+            user.UserMessageNeedGet.Clear();
             user.UserMessageNeedGet.Add(new MessageUser() { Group = gr, Message = gr.ErrorMessage.Where(p => p.KodError == kodMess).First() });
              await  conectDB.UpdateUserMeesage(user);
             foreach (var item in gr.listManagment)
