@@ -87,7 +87,8 @@ namespace QualiAPI.Controllers
 /// <param name="phone">פלאפון של המטייל</param>
 /// <returns>מחזיר רשימה של כל הקבוצות שהמטייל התרחק מהמנהלים של קבוצה זו</returns>
     [HttpGet]
-    [Route("api/CheckDistance/{phone}")]
+        [EnableCors("*", "*", "*")]
+        [Route("api/CheckDistance/{phone}")]
     public async Task<IHttpActionResult> CheckDistance([FromUri] string phone)
     {
       try
@@ -140,5 +141,23 @@ namespace QualiAPI.Controllers
     }
 
 
-  }
+        [HttpPost]
+        [EnableCors("*", "*", "*")]
+        [Route("api/updateMarker")]
+        public async Task<IHttpActionResult> UpdateMarker([FromBody] help mar)
+        {
+            try
+            {
+                bool b = await BL.User.updateMarker(mar.phone, mar.lat, mar.lng);
+                return Ok(b);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+        }
+
+
+
+    }
 }
