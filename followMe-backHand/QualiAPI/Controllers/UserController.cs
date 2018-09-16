@@ -143,8 +143,8 @@ namespace QualiAPI.Controllers
 
         [HttpPost]
         [EnableCors("*", "*", "*")]
-        [Route("api/updateMarker")]
-        public async Task<IHttpActionResult> UpdateMarker([FromBody] help mar)
+        [Route("api/updateStatusUser")]
+        public async Task<IHttpActionResult> updateStatusUser([FromUri] string phone)
         {
             try
             {
