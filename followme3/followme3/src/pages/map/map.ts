@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { marker, UsersServiceProvider, group } from '../../providers/users-service/users-service';
+import { marker, UsersServiceProvider, group, User, MessObject } from '../../providers/users-service/users-service';
 import { Observable } from 'Rxjs/rx';
 import { Subscription } from "rxjs/Subscription";
 import { google } from "google-maps";
@@ -44,7 +44,8 @@ export class MapPage {
               private geolocation: Geolocation,
               private userService: UsersServiceProvider, 
               public loadingCtrl: LoadingController,
-              private _ngZone: NgZone) {
+              private _ngZone: NgZone,
+              private alertCtrl: AlertController) {
       this.group = this.userService.getGroup();
       if (this.group == null || this.group == undefined)
       {
@@ -138,7 +139,8 @@ export class MapPage {
               });
 
               document.getElementById('sendMessage').addEventListener('click', () => {
-                this.navCtrl.push(ShowDitailUserPage);
+                let message:MessObject;
+                this.sendMessage(element.name)
               });
             });
           });
@@ -170,6 +172,44 @@ if(this.timeUpload==0)
   mapInterval()
   {
      setInterval(this.myAddMarker, 20000);
+  }
+
+
+  sendMessage(user:string)
+  {
+    let message:MessObject;
+    message.Group=this.userService.getGroup();
+    message.UserName=user;
+    let alert = this.alertCtrl.create({
+      title: ' שליחת הודעה ל'+user,
+      inputs: [
+        {
+          name: 'textMassage',
+          placeholder: 'תוכן ההודעה',
+          type:'text'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'שלח הודעה',
+          handler: data => {
+         message.Message.MessageError=data;
+          message.Message.KodError=9;
+           this.userService.sendMessgeComplex(message).subscribe(p=>{
+             console.log("ok");
+           },err=>{console.log(err)})
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 

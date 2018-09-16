@@ -1,4 +1,5 @@
 using DAL;
+using DAL.Models;
 using QualiAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,12 @@ namespace BL
     {
       return await conectDB.AddManagment(group, user);
     }
-  }
+
+        public async static Task<bool> sendMessageComplex(MessageUser messageUser )
+        {
+          var allUsers=  await conectDB.getAllUsers();
+          var correctUser = allUsers.FirstOrDefault(p => p.marker.name.Equals(messageUser.UserName));
+          return await conectDB.setNewErrorToUser(correctUser, messageUser.Message, messageUser.Group);
+        }
+    }
 }

@@ -494,18 +494,18 @@ namespace DAL
         /// <param name="user"></param>
         /// <param name="message"></param>
         /// <param name="group"></param>
-        public async static void setNewErrorToUser(UserProfile user, string message, Group group)
+        public async static Task<bool> setNewErrorToUser(UserProfile user, MessageGroup message, Group group)
         {
             try
             {
                 var client = new MongoClient("mongodb://localhost:27017");
                 var database = client.GetDatabase("followMe");
                 var allUsers = database.GetCollection<UserProfile>("users");
-                user.UserMessageNeedGet.Add(new MessageUser() { Message = group.ErrorMessage[0], Group = group });
+                user.UserMessageNeedGet.Add(new MessageUser() { Message = message, Group = group });
                 var filter = Builders<UserProfile>.Filter.Eq("phone", user.phone);
                 var update = Builders<UserProfile>.Update.Set("UserMessageNeedGet", user.UserMessageNeedGet);
                 var result = await allUsers.UpdateOneAsync(filter, update);
-
+                return true;
             }
             catch (Exception)
             {

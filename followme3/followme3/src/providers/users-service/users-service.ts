@@ -106,6 +106,9 @@ export class group {
 */
 @Injectable()
 export class UsersServiceProvider {
+  sendMessgeComplex(message:MessObject): Observable<any> {
+   return this.http.post(this.baseUrl+'sendMessageComplex',message);
+  }
  
 
   isManagment: boolean;

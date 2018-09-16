@@ -1,3 +1,4 @@
+using DAL.Models;
 using QualiAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -29,10 +30,27 @@ namespace QualiAPI.Controllers
       }
     }
 
-   
+
+        [HttpPost]
+        [Route("api/sendMessageComplex")]
+        public async Task<IHttpActionResult> sendMessageComplex([FromBody] MessageUser message)
+        {
+            try
+            {
+                if (await BL.Managment.sendMessageComplex(message) == true)
+                    return Ok(true);
+                return Content(HttpStatusCode.BadRequest, false);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.NotFound, ex.Message);
+            }
+        }
 
 
-    [HttpGet]
+
+
+        [HttpGet]
     [Route("api/getManagmentGroup/{phone}")]
     public async Task< IHttpActionResult > getManagmentGroup([FromUri] string phone)
     {
