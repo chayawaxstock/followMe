@@ -109,6 +109,7 @@ export class group {
 @Injectable()
 export class UsersServiceProvider {
   sendMessgeComplex(message:MessageUser): Observable<any> {
+    console.log(message);
    return this.http.post(this.baseUrl+'sendMessageComplex',message);
   }
  

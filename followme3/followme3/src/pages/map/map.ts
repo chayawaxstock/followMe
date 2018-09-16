@@ -179,12 +179,12 @@ if(this.timeUpload==0)
   sendMessage(user:string)
   {
     let message:MessageUser=new MessageUser();
-    message.Group=this.userService.getGroup();
+   // message.Group=this.userService.getGroup();
     message.UserName=user;
     message.Message=new MessageGroup();
     message.Message.KodError=9;
     message.Message.MessageError="";
-   
+   console.log(message);
     let alert = this.alertCtrl.create({
       title: ' שליחת הודעה ל'+user.substring(0, user.length - 11),
       inputs: [
@@ -206,7 +206,7 @@ if(this.timeUpload==0)
           text: 'שלח הודעה',
           handler: data => {
             console.log(data);
-            message.Message.MessageError=data;
+            message.Message.MessageError=data.textMassage;
            this.userService.sendMessgeComplex(message).subscribe(p=>{
              console.log("ok");
            },err=>{console.log(err)})
