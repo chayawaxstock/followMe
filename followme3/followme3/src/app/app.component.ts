@@ -33,7 +33,6 @@ export interface MenuItem {
   icon: string;
 }
 
-
 @Component({
   templateUrl: 'app.html'
 })
