@@ -99,13 +99,6 @@ export class group {
   }
 }
 
-
-/*
-  Generated class for the UsersServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class UsersServiceProvider {
   sendMessgeComplex(message:MessageUser): Observable<any> {
