@@ -88,19 +88,24 @@ export class MapPage {
          marker.setMap(this.map);
          this.markers.push(marker);
          google.maps.event.addListener(marker, 'click',  () => {
-          let infor=element.name.substring(0, element.name.length - 11) +'מנהל טיול'+ '<input id="aaasss" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/>';
+          let infor=element.name.substring(0, element.name.length - 11) +'מנהל טיול'+ '<input id="open" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/> <button id="sendMessage" onclick="javascript:dbeuger">שליחת הודעה</button>';
           if (element.name.substring(element.name.length - 10) == this.userService.getPhoneUser()) 
-               infor="אני <p id='aaasss'><p/>";
+               infor="אני <p id='open'><p/>";
            var infowindow = new google.maps.InfoWindow({
              content: infor
            });
 
            infowindow.open(this.map, marker);
            google.maps.event.addListenerOnce(infowindow, 'domready', () => {
-             document.getElementById('aaasss').addEventListener('click', () => {
+             document.getElementById('open').addEventListener('click', () => {
                this.navCtrl.push(ShowDitailUserPage);
              });
+             document.getElementById('sendMessage').addEventListener('click', () => {
+              this.navCtrl.push(ShowDitailUserPage);
+            });
            });
+
+           
          });
        
      });
@@ -119,18 +124,20 @@ export class MapPage {
           marker.setMap(this.map);
           this.markers.push(marker);
           google.maps.event.addListener(marker, 'click',  () => {
-            let infor=element.name.substring(0, element.name.length - 11) + '<input id="aaasss" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/>';
+            let infor=element.name.substring(0, element.name.length - 11) + '<input id="open" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/> <button id="sendMessage" onclick="javascript:dbeuger">שליחת הודעה</button>';
           if (element.name.substring(element.name.length - 10) == this.userService.getPhoneUser()) 
-             infor="אני <p id='aaasss'><p/>";
+             infor="אני <p id='open'><p/>";
            var infowindow = new google.maps.InfoWindow({
              content: infor
            });
 
             infowindow.open(this.map, marker);
             google.maps.event.addListenerOnce(infowindow, 'domready', () => {
-              document.getElementById('aaasss').addEventListener('click', () => {
+              document.getElementById('open').addEventListener('click', () => {
+                this.navCtrl.push(ShowDitailUserPage);
+              });
 
-         
+              document.getElementById('sendMessage').addEventListener('click', () => {
                 this.navCtrl.push(ShowDitailUserPage);
               });
             });
