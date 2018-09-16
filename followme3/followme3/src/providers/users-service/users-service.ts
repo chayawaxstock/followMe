@@ -109,11 +109,11 @@ export class group {
 @Injectable()
 export class UsersServiceProvider {
   sendMessgeComplex(message:MessageUser): Observable<any> {
+    message.Group=this.getGroup();
     console.log(message);
    return this.http.post(this.baseUrl+'sendMessageComplex',message);
   }
  
-
   isManagment: boolean;
   groupMangment: group;
   baseUrl: string = "http://localhost:54599/api/";
