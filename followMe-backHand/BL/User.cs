@@ -30,6 +30,7 @@ namespace BL
         {
             return await conectDB.UpdateMarker(phone, lat, lng);
         }
+
         public async static Task<List<UserProfile>> getAllUsers(string pass)
         {
             var group = await conectDB.getUserOfGroup(pass);
@@ -119,6 +120,13 @@ namespace BL
 
                 throw new Exception("תקלה בקבלת האזהרות למטייל " + phone);
             }
+        }
+
+
+        public async static Task<bool> UpdateUserStatus(string phone)
+        {
+            var user = await conectDB.getUser(phone);
+            return await conectDB.UpdateUser(user);
         }
     }
 }
