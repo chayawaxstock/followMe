@@ -40,6 +40,7 @@ import { HomeManagmentPage } from '../pages/home-managment/home-managment';
 import{ AnimateItemSlidingDirective} from '../directives/animate-item-sliding/animate-item-sliding';
 import { AddNewGroupsPage } from '../pages/add-new-groups/add-new-groups';
 import { AddNewGroupsPageModule } from '../pages/add-new-groups/add-new-groups.module';
+import { BatteryStatus } from '../../node_modules/@ionic-native/battery-status';
 
 
 const firebaseConfig = {
@@ -64,9 +65,6 @@ const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     HttpModule,
-  //AccordionModule,
-   // PanelModule,
-    //ButtonModule,
     RadioButtonModule,
     AngularFireModule.initializeApp(firebaseConfig), // <-- firebase here
     AngularFireAuthModule,
@@ -85,6 +83,7 @@ const firebaseConfig = {
   ],
   providers: [
     StatusBar,
+    BatteryStatus,
     LocalNotifications ,
     NativeStorage,
     SplashScreen,

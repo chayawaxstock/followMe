@@ -24,6 +24,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { User } from '../../node_modules/firebase';
 import { Keyboard } from '@ionic-native/keyboard';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { BatteryStatus } from '@ionic-native/battery-status';
 import * as moment from 'moment';
 
 export interface MenuItem {
@@ -63,6 +64,7 @@ export class MyApp {
     private loader: LoadingController,
     public keyboard: Keyboard,
     private localNotifications: LocalNotifications,
+    private batteryStatus :BatteryStatus,
     private alertCtrl:AlertController) {
     this.showLoader();
     this.checkStorage();
@@ -84,7 +86,14 @@ export class MyApp {
 
   }
   ngOnInit() {
-   
+    this.batteryStatus.onChange().subscribe(status => {
+      console.log(status.level, status.isPlugged);
+   });
+  
+   this.batteryStatus.onCritical().subscribe(status=>{
+    alert("Battery Level Critical " + status.level + "%\nRecharge Soon!");
+    //TODO:לעדכן משתמש לא פעיל ושליחת הודעה למנהל
+   })
   }
 
   showLoader() {
@@ -252,4 +261,7 @@ export class MyApp {
       return 'file://assets/sounds/Rooster.caf'
     }
   }
+
+ 
+ 
 }

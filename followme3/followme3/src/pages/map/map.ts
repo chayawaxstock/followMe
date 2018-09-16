@@ -79,7 +79,7 @@ export class MapPage {
      markers.forEach(element => {
       var icon = {
     url: iconManagment, // url
-    scaledSize: new google.maps.Size(35, 35), // scaled size
+    scaledSize: new google.maps.Size(30, 30), // scaled size
     origin: new google.maps.Point(0,0), // origin
     anchor: new google.maps.Point(0, 0) // anchor
 };
@@ -110,7 +110,7 @@ export class MapPage {
       markers.forEach(element => {
         var icon = {
           url: iconUser, // url
-          scaledSize: new google.maps.Size(35, 35), // scaled size
+          scaledSize: new google.maps.Size(30, 30), // scaled size
           origin: new google.maps.Point(0,0), // origin
           anchor: new google.maps.Point(0, 0) // anchor
       };
@@ -176,21 +176,11 @@ if(this.timeUpload==0)
     this.geolocation.getCurrentPosition({ maximumAge: 3600, timeout: 5000, enableHighAccuracy: true }).then((resp) => {
       let mylocation = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
       this.map = new google.maps.Map(this.mapElement.nativeElement, {
-        zoom: 14,
+        zoom: 16,
         center: mylocation
       });
-      this.addMarker(mylocation);
-
       this.mapInterval();
     });
-
-
-    let watch = this.geolocation.watchPosition();
-    watch.subscribe((data) => {
-      let updatelocation = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
-      this.addMarker(updatelocation);
-    }, err => console.log(err));
-
   }
 
 
@@ -209,19 +199,7 @@ if(this.timeUpload==0)
 
   }
 
-  addMarker(location) {
 
-    var myCenter: any = location;
-    var marker = new google.maps.Marker({ animation: google.maps.Animation.DROP, position: location });
-    marker.setMap(this.map);
-    google.maps.event.addListener(marker, 'click', function () {
-      var infowindow = new google.maps.InfoWindow({
-        content: "אני"
-      });
-      infowindow.open(this.map, marker);
-    });
-    this.markers.push(marker);
-  }
 
   setMapOnAll() {
     for (var i = 0; i < this.markers.length; i++) {
