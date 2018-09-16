@@ -5,18 +5,20 @@ import { DateTime } from 'ionic-angular/umd';
 import { Http } from '@angular/http';
 import { Observable, Subject } from 'rxjs';
 
-export interface Message {
-  KodError: number;
-  MessageError: string;
+export class MessageGroup {
+  KodError?: number;
+  MessageError?: string;
+  constructor(){}
 }
 
-export interface MessObject {
-  Message: Message;
-  Group: group;
-  UserName: string;
+export class MessageUser {
+  Message?: MessageGroup;
+  Group?: group;
+  UserName?: string;
+  constructor(){}
 }
 
-export interface ErrorMessage {
+export class ErrorMessage {
   KodError: number;
   MessageError: string;
 }
@@ -106,7 +108,7 @@ export class group {
 */
 @Injectable()
 export class UsersServiceProvider {
-  sendMessgeComplex(message:MessObject): Observable<any> {
+  sendMessgeComplex(message:MessageUser): Observable<any> {
    return this.http.post(this.baseUrl+'sendMessageComplex',message);
   }
  

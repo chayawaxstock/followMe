@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { marker, UsersServiceProvider, group, User, MessObject } from '../../providers/users-service/users-service';
+import { marker, UsersServiceProvider, group, User, MessageUser, MessageGroup } from '../../providers/users-service/users-service';
 import { Observable } from 'Rxjs/rx';
 import { Subscription } from "rxjs/Subscription";
 import { google } from "google-maps";
@@ -10,6 +10,7 @@ import { LoginGroupPage } from '../login-group/login-group';
 import { GroupPage } from '../group/group';
 import { HomePage } from '../home/home';
 import { ShowDitailUserPage } from '../show-ditail-user/show-ditail-user';
+import { Message } from '../../../node_modules/@angular/compiler/src/i18n/i18n_ast';
 declare var google;
 /**
  * Generated class for the MapPage page.
@@ -91,7 +92,7 @@ export class MapPage {
          google.maps.event.addListener(marker, 'click',  () => {
           let infor=element.name.substring(0, element.name.length - 11) +'מנהל טיול'+ '<input id="open" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/> <button id="sendMessage" onclick="javascript:dbeuger">שליחת הודעה</button>';
           if (element.name.substring(element.name.length - 10) == this.userService.getPhoneUser()) 
-               infor="אני <p id='open'><p/>";
+               infor="אני <p id='open'><p/><p id='sendMessage'><p/>";
            var infowindow = new google.maps.InfoWindow({
              content: infor
            });
@@ -127,7 +128,7 @@ export class MapPage {
           google.maps.event.addListener(marker, 'click',  () => {
             let infor=element.name.substring(0, element.name.length - 11) + '<input id="open" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/> <button id="sendMessage" onclick="javascript:dbeuger">שליחת הודעה</button>';
           if (element.name.substring(element.name.length - 10) == this.userService.getPhoneUser()) 
-             infor="אני <p id='open'><p/>";
+             infor="אני <p id='open'><p/><p id='sendMessage'><p/>";
            var infowindow = new google.maps.InfoWindow({
              content: infor
            });
@@ -139,7 +140,7 @@ export class MapPage {
               });
 
               document.getElementById('sendMessage').addEventListener('click', () => {
-                let message:MessObject;
+                let message:MessageUser;
                 this.sendMessage(element.name)
               });
             });
@@ -177,11 +178,15 @@ if(this.timeUpload==0)
 
   sendMessage(user:string)
   {
-    let message:MessObject;
+    let message:MessageUser=new MessageUser();
     message.Group=this.userService.getGroup();
     message.UserName=user;
+    message.Message=new MessageGroup();
+    message.Message.KodError=9;
+    message.Message.MessageError="";
+   
     let alert = this.alertCtrl.create({
-      title: ' שליחת הודעה ל'+user,
+      title: ' שליחת הודעה ל'+user.substring(0, user.length - 11),
       inputs: [
         {
           name: 'textMassage',
@@ -200,8 +205,8 @@ if(this.timeUpload==0)
         {
           text: 'שלח הודעה',
           handler: data => {
-         message.Message.MessageError=data;
-          message.Message.KodError=9;
+            console.log(data);
+            message.Message.MessageError=data;
            this.userService.sendMessgeComplex(message).subscribe(p=>{
              console.log("ok");
            },err=>{console.log(err)})

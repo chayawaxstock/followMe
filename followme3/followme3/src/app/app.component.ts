@@ -10,7 +10,7 @@ import { MapPage } from '../pages/map/map';
 import { GroupPage } from '../pages/group/group';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { ShowDitailGroupPage } from '../pages/show-ditail-group/show-ditail-group';
-import { UsersServiceProvider, group, marker, MessObject } from '../providers/users-service/users-service';
+import { UsersServiceProvider, group, marker, MessageUser } from '../providers/users-service/users-service';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { AddUserToGroupPage } from '../pages/add-user-to-group/add-user-to-group';
 import { OpenPage } from '../pages/open/open';
@@ -148,7 +148,7 @@ export class MyApp {
 
       this.userService.CheckDistance().then(p => { console.log(p+" CheckDistance") }).catch(error=>{console.log(error)});
 
-      this.userService.getMyMessage().then((mes:MessObject[])=>{
+      this.userService.getMyMessage().then((mes:MessageUser[])=>{
         mes.forEach(element => {
           let massage=element.Message.MessageError;
           let titleMessage=element.Group.name;
