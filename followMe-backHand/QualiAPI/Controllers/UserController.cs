@@ -148,7 +148,7 @@ namespace QualiAPI.Controllers
         {
             try
             {
-                bool b = await BL.User.updateMarker(mar.phone, mar.lat, mar.lng);
+                bool b = await BL.User.UpdateUserStatus(phone);
                 return Ok(b);
             }
             catch (Exception ex)
