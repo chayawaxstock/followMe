@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UsersServiceProvider } from '../../providers/users-service/users-service';
+import { UsersServiceProvider, User } from '../../providers/users-service/users-service';
 
 /**
  * Generated class for the ShowDitailUserPage page.
@@ -16,13 +16,17 @@ import { UsersServiceProvider } from '../../providers/users-service/users-servic
 })
 export class ShowDitailUserPage {
   nameUser:any;
+  user:User
   constructor(public navCtrl: NavController, public navParams: NavParams,private userService:UsersServiceProvider) {
   }
 
   ionViewDidLoad() {
    this.userService.getUserInf(this.userService.userDetails).then(p=>{
-     this.nameUser=p.firstName+" "+p.lastName
+     this.user=p;
+     this.nameUser=p.firstName+" "+p.lastName;
+
    });
+
   }
 
 }

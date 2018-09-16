@@ -16,5 +16,28 @@
 
 
 <ion-content padding>
+  <ion-card>
 
+    <ion-item>
+      <ion-avatar item-start>
+        <img [src]="user.image">
+      </ion-avatar>
+      <h2>{{user.firstName  user.lastName}}</h2>
+      <p></p>
+    </ion-item>
+  
+    <ion-card-content>
+      <p>מרחק ממנהלי הקבוצה ממוצע</p>
+    </ion-card-content>
+
+    <ion-row>
+     
+      <ion-col>
+        <button ion-button icon-start clear small>
+          <ion-icon name="text"></ion-icon>
+          <div>send message</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>
