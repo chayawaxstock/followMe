@@ -31,7 +31,7 @@ namespace BL
             return await conectDB.UpdateMarker(phone, lat, lng);
         }
 
-        public async static Task<List<UserProfile>> getAllUsers(string pass)
+        public async static Task<List<UserProfile>> getAllUsersNotInGroup(string pass)
         {
             var group = await conectDB.getUserOfGroup(pass);
             var all = await conectDB.getAllUsers();
@@ -72,6 +72,11 @@ namespace BL
             return send;
         }
 
+        //public async static Task<List<Group>> getAllUsersInGroup(string pass)
+        //{
+        //    var userInGroup = await conectDB.getUserOfGroup(pass);
+        //    return ;
+        //}
 
         public async static Task<bool> AgreeToAddGroup(string pass, string phone)
         {

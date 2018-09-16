@@ -47,12 +47,12 @@ namespace QualiAPI.Controllers
         /// <returns></returns>
     [HttpGet]
     [EnableCors("*", "*", "*")]
-    [Route("api/getAllUsers/{pass}")]
-    public async Task< IHttpActionResult> getAllUsers([FromUri]string pass)
+    [Route("api/getAllUsersNotInGroup/{pass}")]
+    public async Task< IHttpActionResult> getAllUsersNotInGroup([FromUri]string pass)
     {
       try
       {
-      var users= await BL.User.getAllUsers(pass);
+      var users= await BL.User.getAllUsersNotInGroup(pass);
         return Ok(users);
       }
       catch (Exception ex)
@@ -60,12 +60,45 @@ namespace QualiAPI.Controllers
         return Content(HttpStatusCode.BadRequest, ex.Message);
       }
     }
+
+        [HttpGet]
+        [EnableCors("*", "*", "*")]
+        [Route("api/getUserInf/{phone}")]
+        public async Task<IHttpActionResult> getUserInf([FromUri]string phone)
+        {
+            try
+            {
+                var user = await conectDB.getUser(phone);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex.Message);
+            }
+        }
+
+
+        //[HttpGet]
+        //[EnableCors("*", "*", "*")]
+        //[Route("api/getAllUsersInGroup/{pass}")]
+        //public async Task<IHttpActionResult> getAllUsersInGroup([FromUri]string pass)
+        //{
+        //    try
+        //    {
+        //        var users = await BL.User.getAllUsersInGroup(pass);
+        //        return Ok(users);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Content(HttpStatusCode.BadRequest, ex.Message);
+        //    }
+        //}
         /// <summary>
         /// בדיקת קבוצה
         /// </summary>
         /// <param name="phone"></param>
         /// <returns></returns>
-    [HttpGet]
+        [HttpGet]
     [EnableCors("*", "*", "*")]
     [Route("api/checkOpenGroupAndConfirm/{phone}")]
     public IHttpActionResult checkOpenGroupAndConfirm([FromUri]string phone)

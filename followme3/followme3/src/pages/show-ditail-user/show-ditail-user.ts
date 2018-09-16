@@ -15,17 +15,14 @@ import { UsersServiceProvider } from '../../providers/users-service/users-servic
   templateUrl: 'show-ditail-user.html',
 })
 export class ShowDitailUserPage {
-  nameUser:string
+  nameUser:any;
   constructor(public navCtrl: NavController, public navParams: NavParams,private userService:UsersServiceProvider) {
   }
 
   ionViewDidLoad() {
-    this.userService.getAllUsers().then(p=>{
-      let r=p;
-      console.log(r);
-      this.nameUser=r.find(p=>p.phone==this.userService.getPhoneUser()).firstName;
-    });
-    console.log('ionViewDidLoad ShowDitailUserPage');
+   this.userService.getUserInf(this.userService.userDetails).then(p=>{
+     this.nameUser=p.firstName+" "+p.lastName
+   });
   }
 
 }

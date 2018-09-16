@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { group, UsersServiceProvider } from '../../providers/users-service/users-service';
 import { LoginGroupPage } from '../login-group/login-group';
 import { EnterGroupPage } from '../enter-group/enter-group';
+import { ShowDitailUserPage } from '../show-ditail-user/show-ditail-user';
 
 
 @Component({
@@ -24,6 +25,12 @@ export class HomePage {
   addMeToKodGroup()
   {
     this.navCtrl.push(EnterGroupPage);
+  }
+
+  detailUser()
+  {
+    this.userService.userDetails=this.userService.getPhoneUser();
+    this.navCtrl.push(ShowDitailUserPage);
   }
  
 }

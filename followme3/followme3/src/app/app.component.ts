@@ -122,6 +122,10 @@ export class MyApp {
   }
 
   openPage(page) {
+    if(page.title=="הגדרות משתמש")
+    {
+      this.userService.userDetails=this.userService.getPhoneUser();
+    }
     this.nav.setRoot(page.component);
   }
 

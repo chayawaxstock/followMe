@@ -136,6 +136,7 @@ export class MapPage {
             infowindow.open(this.map, marker);
             google.maps.event.addListenerOnce(infowindow, 'domready', () => {
               document.getElementById('open').addEventListener('click', () => {
+                this.userService.userDetails=element.name.substring(element.name.length - 10);
                 this.navCtrl.push(ShowDitailUserPage);
               });
 

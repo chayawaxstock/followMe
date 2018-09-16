@@ -101,12 +101,14 @@ export class group {
 
 @Injectable()
 export class UsersServiceProvider {
+  
   sendMessgeComplex(message:MessageUser): Observable<any> {
     message.Group=this.getGroup();
     console.log(message);
    return this.http.post(this.baseUrl+'sendMessageComplex',message);
   }
  
+  userDetails:string;
   isManagment: boolean;
   groupMangment: group;
   baseUrl: string = "http://localhost:54599/api/";
@@ -205,8 +207,8 @@ export class UsersServiceProvider {
     return this.http.post("http://localhost:54599/api/updateMarker", help).toPromise();
   }
 
-  getAllUsers(): Promise<User[]> {
-    return this.http.get("http://localhost:54599/api/getAllUsers/" + this.getGroup().password).map(p => p.json()).toPromise();
+  getAllUsersNotInGroup(): Promise<User[]> {
+    return this.http.get("http://localhost:54599/api/getAllUsersNotInGroup/" + this.getGroup().password).map(p => p.json()).toPromise();
   }
 
   checkPassGroup(pass: string) {
@@ -244,8 +246,8 @@ export class UsersServiceProvider {
     return this.http.get(this.baseUrl + "getAllGroups").map(p => p.json()).toPromise();
   }
 
-  getUserInf():Promise<User> {
-      return this.http.get(this.baseUrl+"getUserInf").map(p=>p.json()).toPromise();
+  getUserInf(phone:string):Promise<User> {
+      return this.http.get(this.baseUrl+"getUserInf/"+phone).map(p=>p.json()).toPromise();
   }
 
   getMyMessage():Promise<any>
