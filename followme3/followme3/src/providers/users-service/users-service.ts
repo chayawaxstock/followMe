@@ -101,6 +101,9 @@ export class group {
 
 @Injectable()
 export class UsersServiceProvider {
+  getAllUsers(): any {
+    throw new Error("Method not implemented.");
+  }
   
   sendMessgeComplex(message:MessageUser): Observable<any> {
     message.Group=this.getGroup();

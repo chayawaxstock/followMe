@@ -17,7 +17,6 @@ export class HomePage {
   this.group=userService.getGroup();
   
   this.phone=userService.getPhoneUser();
- // setInterval(() => console.log(9), 500);
   }
 
 

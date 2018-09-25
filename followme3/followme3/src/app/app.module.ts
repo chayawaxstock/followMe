@@ -41,7 +41,11 @@ import{ AnimateItemSlidingDirective} from '../directives/animate-item-sliding/an
 import { AddNewGroupsPage } from '../pages/add-new-groups/add-new-groups';
 import { AddNewGroupsPageModule } from '../pages/add-new-groups/add-new-groups.module';
 import { BatteryStatus } from '../../node_modules/@ionic-native/battery-status';
-
+import { Facebook } from '@ionic-native/facebook';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { TwitterConnect } from '@ionic-native/twitter-connect';
+import { TwitterService } from 'ng2-twitter';
+import { TwitterProvider } from '../providers/twitter/twitter';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDjyxiKCMOWYfvhctnSDKjZUAMgvYDIZoY",
@@ -82,6 +86,7 @@ const firebaseConfig = {
 
   ],
   providers: [
+    Facebook,
     StatusBar,
     BatteryStatus,
     LocalNotifications ,
@@ -90,8 +95,10 @@ const firebaseConfig = {
     Camera,
     GooglePlus,
     IonicStorageModule,
+    TwitterService,TwitterConnect,InAppBrowser,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    UsersServiceProvider, Geolocation, HttpClient, Keyboard,Sim
+    UsersServiceProvider, Geolocation, HttpClient, Keyboard,Sim,
+    TwitterProvider
   ]
 })
 export class AppModule { }

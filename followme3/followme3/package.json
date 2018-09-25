@@ -29,9 +29,11 @@
     "@ionic-native/date-picker": "^4.11.0",
     "@ionic-native/device-accounts": "^4.7.0",
     "@ionic-native/diagnostic": "^4.9.2",
+    "@ionic-native/facebook": "^4.14.0",
     "@ionic-native/file": "^4.9.2",
     "@ionic-native/geolocation": "^4.7.0",
     "@ionic-native/google-plus": "^4.7.0",
+    "@ionic-native/in-app-browser": "^4.14.0",
     "@ionic-native/keyboard": "^4.8.0",
     "@ionic-native/local-notifications": "^4.12.2",
     "@ionic-native/native-storage": "^4.8.0",
@@ -39,7 +41,7 @@
     "@ionic-native/sim": "^4.12.0",
     "@ionic-native/splash-screen": "4.7.0",
     "@ionic-native/status-bar": "4.7.0",
-    "@ionic-native/twitter-connect": "^4.7.0",
+    "@ionic-native/twitter-connect": "^4.14.0",
     "@ionic/pro": "1.0.20",
     "@ionic/storage": "^2.1.3",
     "@mobiscroll/angular-lite": "^4.3.2",
@@ -61,10 +63,12 @@
     "cordova-plugin-camera-preview": "^0.10.0",
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-facebook4": "^3.0.0",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-googlemaps": "^2.3.6",
     "cordova-plugin-googleplus": "^5.3.0",
+    "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.1.19",
     "cordova-plugin-local-notification": "^0.9.0-beta.2",
@@ -91,6 +95,7 @@
     "ionicons": "3.0.0",
     "minimist": "^1.2.0",
     "moment": "^2.22.2",
+    "ng2-twitter": "^0.3.0",
     "node-js-marker-clusterer": "^1.0.0",
     "onesignal-cordova-plugin": "^2.4.3",
     "primeicons": "^1.0.0-beta.10",
@@ -99,6 +104,7 @@
     "rxjs": "^6.2.2",
     "rxjs-compat": "^6.2.2",
     "sw-toolbox": "3.6.0",
+    "twitter-connect-plugin": "^0.6.0",
     "xml2js": "^0.4.19",
     "zone.js": "0.8.26"
   },
@@ -142,7 +148,16 @@
       "onesignal-cordova-plugin": {},
       "cordova-plugin-local-notification": {},
       "ionic-plugin-keyboard": {},
-      "cordova-plugin-battery-status": {}
+      "cordova-plugin-battery-status": {},
+      "cordova-plugin-facebook4": {
+        "APP_ID": "123456789",
+        "APP_NAME": "myApplication",
+        "FACEBOOK_ANDROID_SDK_VERSION": "4.36.0"
+      },
+      "twitter-connect-plugin": {
+        "FABRIC_KEY": "79e35e5b1f8db1ed4c33f6b2f231bd9807b7f356"
+      },
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
       "browser"
