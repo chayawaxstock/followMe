@@ -90,7 +90,7 @@ export class MapPage {
          marker.setMap(this.map);
          this.markers.push(marker);
          google.maps.event.addListener(marker, 'click',  () => {
-          let infor=element.name.substring(0, element.name.length - 11) +'מנהל טיול'+ '<input id="open" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/> <button id="sendMessage" onclick="javascript:dbeuger">שליחת הודעה</button>';
+          let infor=element.name.substring(0, element.name.length - 11) +'מנהל טיול'+ '<input id="open" type="button" value="פרטי מטייל מורחבים:"/> <button id="sendMessage" >שליחת הודעה</button>';
           if (element.name.substring(element.name.length - 10) == this.userService.getPhoneUser()) 
                infor="אני <p id='open'><p/><p id='sendMessage'><p/>";
            var infowindow = new google.maps.InfoWindow({
@@ -126,7 +126,7 @@ export class MapPage {
           marker.setMap(this.map);
           this.markers.push(marker);
           google.maps.event.addListener(marker, 'click',  () => {
-            let infor=element.name.substring(0, element.name.length - 11) + '<input id="open" type="button" value="פרטי מטייל מורחבים:" onclick="javascript:dbeuger"/> <button id="sendMessage" onclick="javascript:dbeuger">שליחת הודעה</button>';
+            let infor=element.name.substring(0, element.name.length - 11) + '<input id="open" type="button" value="פרטי מטייל מורחבים:" /> <button id="sendMessage" >שליחת הודעה</button>';
           if (element.name.substring(element.name.length - 10) == this.userService.getPhoneUser()) 
              infor="אני <p id='open'><p/><p id='sendMessage'><p/>";
            var infowindow = new google.maps.InfoWindow({

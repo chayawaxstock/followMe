@@ -46,6 +46,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { TwitterConnect } from '@ionic-native/twitter-connect';
 import { TwitterService } from 'ng2-twitter';
 import { TwitterProvider } from '../providers/twitter/twitter';
+import { ChartsModule } from 'ng2-charts';
+import { HistoryPage } from '../pages/history/history';
+import { HistoryBarChartsPage } from '../pages/history-bar-charts/history-bar-charts';
+import { HistoryDoughnutChartPage } from '../pages/history-doughnut-chart/history-doughnut-chart';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDjyxiKCMOWYfvhctnSDKjZUAMgvYDIZoY",
@@ -61,7 +65,8 @@ const firebaseConfig = {
     MyApp,
     HomePage,
     ListPage,RegisterPage,MapPage,GroupPage,AddUserToGroupPage,AddNewGroupsPage, AnimateItemSlidingDirective,
-    ShowDitailGroupPage,EnterPage,LoginGroupPage,ShowDitailUserPage,OpenPage,EnterGroupPage,HomeManagmentPage
+    ShowDitailGroupPage,EnterPage,LoginGroupPage,ShowDitailUserPage,OpenPage,HistoryPage,
+    EnterGroupPage,HomeManagmentPage,HistoryBarChartsPage,HistoryDoughnutChartPage
   ],
   imports: [
     BrowserModule,
@@ -73,14 +78,15 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig), // <-- firebase here
     AngularFireAuthModule,
     ComponentsModule, 
-    MbscModule
-    ,BrowserModule
+    MbscModule,
+    BrowserModule,
+    ChartsModule
     
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
+    HomePage,HistoryPage,HistoryBarChartsPage,HistoryDoughnutChartPage,
     ListPage,RegisterPage,MapPage,GroupPage,AddUserToGroupPage,LoginGroupPage,AddNewGroupsPage,
     ShowDitailGroupPage,EnterPage,ShowDitailUserPage,OpenPage,EnterGroupPage,HomeManagmentPage,
 
