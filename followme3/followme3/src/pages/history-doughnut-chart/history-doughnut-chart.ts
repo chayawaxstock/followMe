@@ -15,7 +15,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HistoryDoughnutChartPage {
 // Doughnut
-//כל קבוצה  כמה התראות היו לה במשך 30 יום האחרונים
+//כל קבוצה  כמה התראות היו לה במשך 30 יום האחרונים או לפי שנה
 
 //TODO:קבלת כל הקבוצות
 public doughnutChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];

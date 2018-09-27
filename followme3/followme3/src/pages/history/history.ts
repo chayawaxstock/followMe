@@ -14,7 +14,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'history.html',
 })
 export class HistoryPage {
-//כמות ההתראות לפי חודשים
+//כמות ההתראות לפי קבוצות שרשום לפי חודשיםי 
   public lineChartData:Array<any> = [
     {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
     {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'},
