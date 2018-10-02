@@ -31,7 +31,6 @@ import { ShowDitailUserPage } from '../pages/show-ditail-user/show-ditail-user';
 import { OpenPage } from '../pages/open/open';
 import { AngularFireModule } from "angularfire2";
 import { AngularFireDatabaseModule } from "angularfire2/database";
-
 import { EnterGroupPage } from '../pages/enter-group/enter-group';
 import {Sim} from '@ionic-native/sim'
 import { LocalNotifications } from '@ionic-native/local-notifications';

@@ -57,9 +57,10 @@ public sim:Sim) {
   }
 
 
-  presentPrompt() {
+  presentPrompt1() {
+
     let alert = this.alertCtrl.create({
-      title: 'Login',
+      title: 'תקלה בקבלת מספר הפלאפון נא הכנס אותו ידנית',
       inputs: [
         {
           name: 'phone',
@@ -94,13 +95,15 @@ public sim:Sim) {
     alert.present();
   }
   
-  getPhoneFromSim()
+  getPhoneFromSim1()
   {
+    debugger;
     this.sim.getSimInfo().then(
       (info)=>{console.log('sim info:',info);
-    this.phone=info},
+    this.phone=info;
+  this.register()},
       async (err)=>{console.log('Unable to get sim info:',err);
-         await this.presentPrompt();
+         await this.presentPrompt1();
   });
   
     this.sim.hasReadPermission().then(
@@ -120,9 +123,10 @@ public sim:Sim) {
       const provider = new firebase.auth.GoogleAuthProvider();
       const credential = await this.afAuth.auth.signInWithPopup(provider);
       const loggedIn:any = credential.additionalUserInfo.profile;
-      this.getPhoneFromSim();
+    
      this.costomerUser = {email: loggedIn.email, firstName: loggedIn.given_name,lastName:loggedIn.family_name,
-      image:loggedIn.picture,phone:this.phone}
+      image:loggedIn.picture,phone:this.phone} ;
+       this.getPhoneFromSim1();
     } catch (err) {
       console.log(err)
     }

@@ -85,7 +85,8 @@ export class MyApp {
       { title: 'הגדרות משתמש', component: ShowDitailUserPage,icon: 'settings' },
       { title: 'History', component:HistoryPage ,icon: 'settings' },
       { title: 'HistoryBarCharts', component:HistoryBarChartsPage ,icon: 'settings' },
-      { title: 'HistoryDoughnutChart', component:HistoryDoughnutChartPage ,icon: 'settings' }
+      { title: 'HistoryDoughnutChart', component:HistoryDoughnutChartPage ,icon: 'settings' },
+      { title: 'register', component:RegisterPage ,icon: 'settings' }
     ];
 
   }
@@ -158,15 +159,14 @@ export class MyApp {
 
       this.userService.getMyMessage().then((mes:MessageUser[])=>{
         mes.forEach(element => {
+          console.log(element);
           let massage=element.Message.MessageError;
           let titleMessage=element.Group.name;
           if(element.Message.KodError==1)
           massage+="מטייל: "+element.UserName;
            this.addNotification(titleMessage,massage);
-         });
+         },err=>{console.log(err)});
         
-        
-
       },err=>console.log(err)).catch(err=>{"לא היתה אפשרות לקבלת ההדעות שנשלחו למשתמש"})
 
     }, 60000);
@@ -256,7 +256,7 @@ export class MyApp {
 
    let alert = this.alertCtrl.create({
      title: title,
-     subTitle: 'Notification setup successfully '+message,
+     subTitle: message,
      buttons: ['OK']
    });
    alert.present();

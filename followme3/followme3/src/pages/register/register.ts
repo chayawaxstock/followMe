@@ -61,8 +61,8 @@ export class RegisterPage {
     public googlePlus: GooglePlus,
     private geolocation: Geolocation,
     private storage: Storage,private nativeStorage: NativeStorage,
-  public sim:Sim,
-public alertCtrl:AlertController) {
+    public sim:Sim,
+    public alertCtrl:AlertController) {
     this.user = new User();
     this.images = [];
     this.pages = [
@@ -168,6 +168,7 @@ presentPrompt() {
 
 enterRegister()
 {
+  debugger;
   this.getPhoneFromSim();
 }
 getCurrectLocation()
