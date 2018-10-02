@@ -1,22 +1,15 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="" class="">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>קבוצה חדשה</ion-title>
-    <!-- <ion-buttons end>
-        <button ion-button icon-only (click)="addEvent()">
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-buttons> -->
   </ion-navbar>
 </ion-header>
 
 <ion-content class="login-content" padding dir="rtl">
 
     <form class="form" [formGroup]="validations_form"  (ngSubmit)="onSubmit(validations_form.value)">
-   
-
       <ion-item>
         <ion-label floating color="primary">שם קבוצה</ion-label>
         <ion-input type="text" formControlName="username" class="form-controll" required clearInput=true ></ion-input>
@@ -30,8 +23,6 @@
         </ng-container>
       </div>
 
-
-
       <div formGroupName="matching_passwords">
         <ion-item>
           <ion-label floating color="primary">סיסמת קבוצה</ion-label>
@@ -44,8 +35,6 @@
             </div>
           </ng-container>
         </div>
-
-
 
         <ion-item>
           <ion-label floating color="primary">אישור סיסמה</ion-label>

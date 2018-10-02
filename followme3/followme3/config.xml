@@ -112,15 +112,15 @@
     <allow-navigation href="http://localhost:8100" />
     <allow-navigation href="http://172.25.228.81:8100" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <plugin name="twitter-connect-plugin" spec="^0.6.0">
+        <variable name="FABRIC_KEY" value="79e35e5b1f8db1ed4c33f6b2f231bd9807b7f356" />
+    </plugin>
+    <engine name="browser" spec="5.0.3" />
     <plugin name="cordova-plugin-battery-status" spec="^2.0.2" />
     <plugin name="cordova-plugin-facebook4" spec="^3.0.0">
         <variable name="APP_ID" value="123456789" />
         <variable name="APP_NAME" value="myApplication" />
         <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.36.0" />
     </plugin>
-    <plugin name="twitter-connect-plugin" spec="^0.6.0">
-        <variable name="FABRIC_KEY" value="79e35e5b1f8db1ed4c33f6b2f231bd9807b7f356" />
-    </plugin>
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
-    <engine name="browser" spec="5.0.3" />
 </widget>
