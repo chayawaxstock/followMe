@@ -43,6 +43,7 @@ import { AddNewGroupsPageModule } from '../pages/add-new-groups/add-new-groups.m
 import { BatteryStatus } from '../../node_modules/@ionic-native/battery-status';
 
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyDjyxiKCMOWYfvhctnSDKjZUAMgvYDIZoY",
   authDomain: "myproject-be30d.firebaseapp.com",
