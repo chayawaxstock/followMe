@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace FollowMe.DataModel.Models
 {
-    class UserProfile
+   public class UserProfile
     {
+
     }
 }

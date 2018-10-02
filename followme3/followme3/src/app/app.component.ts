@@ -26,6 +26,9 @@ import { Keyboard } from '@ionic-native/keyboard';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { BatteryStatus } from '@ionic-native/battery-status';
 import * as moment from 'moment';
+import { HistoryPage } from '../pages/history/history';
+import { HistoryBarChartsPage } from '../pages/history-bar-charts/history-bar-charts';
+import { HistoryDoughnutChartPage } from '../pages/history-doughnut-chart/history-doughnut-chart';
 
 export interface MenuItem {
   title: string;
@@ -79,8 +82,10 @@ export class MyApp {
       { title: 'הוספת מטיילים לקבוצה', component: AddUserToGroupPage,icon: 'add-circle' },
       { title: 'מפה', component: MapPage,icon: 'map' },
       { title: 'הגדרות קבוצה', component: ShowDitailGroupPage,icon: 'settings' },
-      { title: 'הגדרות משתמש', component: ShowDitailUserPage,icon: 'settings' }
-
+      { title: 'הגדרות משתמש', component: ShowDitailUserPage,icon: 'settings' },
+      { title: 'History', component:HistoryPage ,icon: 'settings' },
+      { title: 'HistoryBarCharts', component:HistoryBarChartsPage ,icon: 'settings' },
+      { title: 'HistoryDoughnutChart', component:HistoryDoughnutChartPage ,icon: 'settings' }
     ];
 
   }

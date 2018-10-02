@@ -17,8 +17,10 @@ import { AddUserToGroupPage } from '../add-user-to-group/add-user-to-group';
 import { MapPage } from '../map/map';
 import { ShowDitailGroupPage } from '../show-ditail-group/show-ditail-group';
 import { ShowDitailUserPage } from '../show-ditail-user/show-ditail-user';
-
-
+import { Facebook } from '@ionic-native/facebook';
+import { TwitterConnect } from '@ionic-native/twitter-connect';
+import { TwitterProvider } from '../../providers/twitter/twitter';
+import firebase from 'firebase';
 declare var cordova: any; // global variable for paths
 
 /**
@@ -35,15 +37,22 @@ declare var cordova: any; // global variable for paths
 })
 export class RegisterPage {
 
-  
+  isLoggedIn:boolean = false;
+  users: any;
   images: Array<{ src: String }>;
   imgSrc:string
    user: User;
    phone:string;
   marker: marker;
   pages: ({ title: string; component: typeof HomePage; icon: string; } | { title: string; component: typeof GroupPage; icon: string; } | { title: string; component: typeof AddNewGroupsPage; icon: string; } | { title: string; component: typeof AddUserToGroupPage; icon: string; } | { title: string; component: typeof MapPage; icon: string; } | { title: string; component: typeof ShowDitailGroupPage; icon: string; } | { title: string; component: typeof ShowDitailUserPage; icon: string; })[];
+  loading: any;
+  userProfile: any = null;;
  
   constructor(public nav: NavController,
+   
+    private twitter: TwitterConnect, 
+    private twitterProvider: TwitterProvider,
+    private fb: Facebook,
     public  userService: UsersServiceProvider,
     public navParams: NavParams,
     private serviceUser: UsersServiceProvider,
@@ -66,6 +75,17 @@ public alertCtrl:AlertController) {
       { title: 'הגדרות משתמש', component: ShowDitailUserPage,icon: 'settings' }
     
     ];
+
+    fb.getLoginStatus()
+    .then(res => {
+      console.log(res.status);
+      if(res.status === "connect") {
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    })
+    .catch(e => console.log(e));
   }
 
   takePicture() {
@@ -253,6 +273,85 @@ this.userService.updateMarker(this.userService.getPhoneUser(),this.marker).then(
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
+  }
+
+  login() {
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+      .then(res => {
+        if(res.status === "connected") {
+          this.isLoggedIn = true;
+          this.getUserDetail(res.authResponse.userID);
+        } else {
+          this.isLoggedIn = false;
+        }
+      })
+      .catch(e => console.log('Error logging into Facebook', e));
+  }
+
+  logout() {
+    this.fb.logout()
+      .then( res => this.isLoggedIn = false)
+      .catch(e => console.log('Error logout from Facebook', e));
+  }
+
+  getUserDetail(userid) {
+    this.fb.api("/"+userid+"/?fields=name,email,first_name,picture.width(720).height(720).as(picture_large)",["public_profile"])
+      .then(res => {
+       let userData = {email: res['email'], first_name: res['first_name'], picture: res['picture_large']['data']['url'], username: res['name']}
+        console.log(res);
+        this.users = res;
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  public loginWithTwitter() {
+    this.showLoading();
+    this.twitter.login().then((data) => {
+      this.twitterProvider.setTokens(data.token, data.secret);
+      this.loading.dismiss().then(() => {
+        this.nav.setRoot('TimelinePage');
+      });
+    }, error => {
+      this.showError(error);
+    });
+  }
+ 
+  private showLoading() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    this.loading.present();
+  }
+
+  private showError(text) {
+    this.loading.dismiss().then(() => {
+      let alert = this.alertCtrl.create({
+        title: 'Fail',
+        message: text + '\nMake sure to setup Twitter account on your device.',
+        buttons: ['OK']
+      });
+      alert.present();
+    });
+  }
+
+  twLogin(): void {
+    this.twitter.login().then( response => {
+      const twitterCredential = firebase.auth.TwitterAuthProvider
+          .credential(response.token, response.secret);
+  
+      firebase.auth().signInWithCredential(twitterCredential)
+      .then( userProfile => {
+        this.userProfile = userProfile;
+        this.userProfile.twName = response.userName;
+        console.log(this.userProfile);
+      }, error => {
+        console.log(error);
+      });
+    }, error => {
+      console.log("Error connecting to twitter: ", error);
+    });
   }
 
 

@@ -41,7 +41,15 @@ import{ AnimateItemSlidingDirective} from '../directives/animate-item-sliding/an
 import { AddNewGroupsPage } from '../pages/add-new-groups/add-new-groups';
 import { AddNewGroupsPageModule } from '../pages/add-new-groups/add-new-groups.module';
 import { BatteryStatus } from '../../node_modules/@ionic-native/battery-status';
-
+import { Facebook } from '@ionic-native/facebook';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { TwitterConnect } from '@ionic-native/twitter-connect';
+import { TwitterService } from 'ng2-twitter';
+import { TwitterProvider } from '../providers/twitter/twitter';
+import { ChartsModule } from 'ng2-charts';
+import { HistoryPage } from '../pages/history/history';
+import { HistoryBarChartsPage } from '../pages/history-bar-charts/history-bar-charts';
+import { HistoryDoughnutChartPage } from '../pages/history-doughnut-chart/history-doughnut-chart';
 
 
 const firebaseConfig = {
@@ -58,7 +66,8 @@ const firebaseConfig = {
     MyApp,
     HomePage,
     ListPage,RegisterPage,MapPage,GroupPage,AddUserToGroupPage,AddNewGroupsPage, AnimateItemSlidingDirective,
-    ShowDitailGroupPage,EnterPage,LoginGroupPage,ShowDitailUserPage,OpenPage,EnterGroupPage,HomeManagmentPage
+    ShowDitailGroupPage,EnterPage,LoginGroupPage,ShowDitailUserPage,OpenPage,HistoryPage,
+    EnterGroupPage,HomeManagmentPage,HistoryBarChartsPage,HistoryDoughnutChartPage
   ],
   imports: [
     BrowserModule,
@@ -70,19 +79,21 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig), // <-- firebase here
     AngularFireAuthModule,
     ComponentsModule, 
-    MbscModule
-    ,BrowserModule
+    MbscModule,
+    BrowserModule,
+    ChartsModule
     
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
+    HomePage,HistoryPage,HistoryBarChartsPage,HistoryDoughnutChartPage,
     ListPage,RegisterPage,MapPage,GroupPage,AddUserToGroupPage,LoginGroupPage,AddNewGroupsPage,
     ShowDitailGroupPage,EnterPage,ShowDitailUserPage,OpenPage,EnterGroupPage,HomeManagmentPage,
 
   ],
   providers: [
+    Facebook,
     StatusBar,
     BatteryStatus,
     LocalNotifications ,
@@ -91,8 +102,10 @@ const firebaseConfig = {
     Camera,
     GooglePlus,
     IonicStorageModule,
+    TwitterService,TwitterConnect,InAppBrowser,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    UsersServiceProvider, Geolocation, HttpClient, Keyboard,Sim
+    UsersServiceProvider, Geolocation, HttpClient, Keyboard,Sim,
+    TwitterProvider
   ]
 })
 export class AppModule { }
