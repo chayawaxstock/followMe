@@ -39,8 +39,8 @@ namespace BL
             List<UserProfile> notInGroup = new List<UserProfile>();
             foreach (var item in all)
             {
-                UserProfile user = await conectDB.getUser(item.phone);
-                if (group.Where(p => p.UserPhoneGroup == user.phone).FirstOrDefault() == null && managment.Where(p => p.phoneManagment == user.phone).FirstOrDefault() == null)
+                UserProfile user = await conectDB.getUser(item.Phone);
+                if (group.Where(p => p.UserPhoneGroup == user.Phone).FirstOrDefault() == null && managment.Where(p => p.phoneManagment == user.Phone).FirstOrDefault() == null)
                     notInGroup.Add(item);
             }
             return notInGroup;
@@ -53,12 +53,12 @@ namespace BL
             List<Group> send = new List<Group>();
             foreach (var item in groups)
             {
-                if (item.status == true && item.DateBeginTrip <= DateTime.Now && item.DateEndTrip >= DateTime.Now)
+                if (item.Status == true && item.DateBeginTrip <= DateTime.Now && item.DateEndTrip >= DateTime.Now)
                 {
                     foreach (var item1 in item.OkUsers)
                     {
                         UserProfile user = await conectDB.getUser(item1.UserPhoneGroup);
-                        if (user.phone == phone)
+                        if (user.Phone == phone)
                         {
                             d = 1;
                         }
@@ -88,8 +88,8 @@ namespace BL
                 if (g != null)
                 {
                     UserInGroup users = new UserInGroup();
-                    users.UserPhoneGroup = user.phone;
-                    g.users.Add(users);
+                    users.UserPhoneGroup = user.Phone;
+                    g.Users.Add(users);
                     g.OkUsers.Add(users);
                     await conectDB.UpdateGroup(g);
                     //TODO:שמירה בדטה בייס

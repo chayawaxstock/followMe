@@ -33,29 +33,29 @@ namespace BL
             foreach (var item in groupUser)
             {
 
-                if (item.status == true&&item.DateBeginTrip<=DateTime.Now&&item.DateEndTrip>=DateTime.Now)
+                if (item.Status == true&&item.DateBeginTrip<=DateTime.Now&&item.DateEndTrip>=DateTime.Now)
                 {
-                    double latA = user.marker.lat;
-                    double longA = user.marker.lng;
+                    double latA = user.Marker.lat;
+                    double longA = user.Marker.lng;
                     int d = 0;
-                    foreach (var item1 in item.listManagment)
+                    foreach (var item1 in item.ListManagment)
                     {
                        
                         if (item1.ComeToTrip == true)
                         {
                             var managmentMarker = await conectDB.getUser(item1.phoneManagment);
-                            double latB = managmentMarker.marker.lat;
-                            double longB = managmentMarker.marker.lng;
+                            double latB = managmentMarker.Marker.lat;
+                            double longB = managmentMarker.Marker.lng;
 
                             var locA = new GeoCoordinate(latA, longA);
                             var locB = new GeoCoordinate(latB, longB);
                             double distance = locA.GetDistanceTo(locB);
-                            if (distance > item.definitionGroup.distance)
+                            if (distance > item.DefinitionGroup.Distance)
                                 d ++;
                         }
                         
                     }
-                    if (d ==item.listManagment.Count(p=>p.ComeToTrip==true))// התרחק מכל המנהלי הקבוצה
+                    if (d ==item.ListManagment.Count(p=>p.ComeToTrip==true))// התרחק מכל המנהלי הקבוצה
                         farGroup.Add(item);
                 }
                 farGroup.ForEach(async element => { await sendMessageFarGroup(element,user,5); });
@@ -66,7 +66,7 @@ namespace BL
         async  public static Task<List<Group>> groupOfUserStatusFalse(string phone)
         {
             var allGroup = await conectDB.getAllGroup();
-            return allGroup.Where(p =>( p.DateBeginTrip > DateTime.Now||p.status==false )&& p.users.FirstOrDefault(p2 => p2.UserPhoneGroup == phone) != null).ToList();
+            return allGroup.Where(p =>( p.DateBeginTrip > DateTime.Now||p.Status==false )&& p.Users.FirstOrDefault(p2 => p2.UserPhoneGroup == phone) != null).ToList();
         }
 
         public async static Task<List<Group>> getManagmentGroup(string phone)
@@ -75,8 +75,8 @@ namespace BL
             List<Group> groupManagment = new List<Group>();
             foreach (var item in allGroup)
             {
-                if (item.listManagment.FirstOrDefault(p => p.phoneManagment.Equals(phone)) != null && item.DateBeginTrip <= DateTime.Now && item.DateEndTrip >= DateTime.Now &&item.status==true||
-                  item.listManagment.FirstOrDefault(p => p.phoneManagment.Equals(phone)) != null && item.DateBeginTrip > DateTime.Now && item.status == true)
+                if (item.ListManagment.FirstOrDefault(p => p.phoneManagment.Equals(phone)) != null && item.DateBeginTrip <= DateTime.Now && item.DateEndTrip >= DateTime.Now &&item.Status==true||
+                  item.ListManagment.FirstOrDefault(p => p.phoneManagment.Equals(phone)) != null && item.DateBeginTrip > DateTime.Now && item.Status == true)
                     groupManagment.Add(item);
             }
             return groupManagment;
@@ -85,7 +85,7 @@ namespace BL
         public async static Task<List<Group>> getManagmentGroupThatFalse(string phone)
         {
             var allGroup = await conectDB.getAllGroup();
-           return allGroup.Where(p => p.users.FirstOrDefault(p2 => p2.UserPhoneGroup == phone) != null && p.DateBeginTrip > DateTime.Now).ToList();
+           return allGroup.Where(p => p.Users.FirstOrDefault(p2 => p2.UserPhoneGroup == phone) != null && p.DateBeginTrip > DateTime.Now).ToList();
  
         }
 
@@ -109,10 +109,10 @@ namespace BL
             {
                 if (item.Code == Code)
                 {
-                    item.users.Add(new UserInGroup() { UserPhoneGroup = phone, Definition = new DefinitionUser() { SeeMeAll = true } });
-                    item.OkUsers.Add(new UserInGroup() { UserPhoneGroup = phone, Definition = new DefinitionUser() { SeeMeAll = true } });
+                    item.Users.Add(new UserInGroup() { UserPhoneGroup = phone, Definition = new DefinitionUser() { IsSeeMeAll = true } });
+                    item.OkUsers.Add(new UserInGroup() { UserPhoneGroup = phone, Definition = new DefinitionUser() { IsSeeMeAll = true } });
                     await conectDB.UpdateUsersGroup(item);
-                    await conectDB.UpdateOkUser(item.password, phone);
+                    await conectDB.UpdateOkUser(item.Password, phone);
                     return item;
                 }
             }
@@ -144,8 +144,8 @@ namespace BL
             {
                 if (item.DateBeginTrip <= DateTime.Now && item.DateEndTrip > DateTime.Now || item.DateBeginTrip >= DateTime.Now)
                 {
-                    var d = item.users;
-                    if (item.users != null)
+                    var d = item.Users;
+                    if (item.Users != null)
                         foreach (var item1 in d)
                         {
                             if (item1.UserPhoneGroup != null)
@@ -153,7 +153,7 @@ namespace BL
                                 var user = await conectDB.getUser(item1.UserPhoneGroup);
                                 if (user != null)
                                 {
-                                    if (user.phone == phone)
+                                    if (user.Phone == phone)
                                         g.Add(item);
                                 }
                             }
@@ -169,10 +169,10 @@ namespace BL
             List<Group> g = new List<Group>();
             foreach (var item in groups)
             {
-                if (item.DateBeginTrip <= DateTime.Now && item.DateEndTrip > DateTime.Now&&item.status==true)
+                if (item.DateBeginTrip <= DateTime.Now && item.DateEndTrip > DateTime.Now&&item.Status==true)
                 {
-                    var d = item.users;
-                    if (item.users != null)
+                    var d = item.Users;
+                    if (item.Users != null)
                         foreach (var item1 in d)
                         {
                             if (item1.UserPhoneGroup != null)
@@ -180,7 +180,7 @@ namespace BL
                                 var user = await conectDB.getUser(item1.UserPhoneGroup);
                                 if (user != null)
                                 {
-                                    if (user.phone == phone)
+                                    if (user.Phone == phone)
                                         g.Add(item);
                                 }
                             }
@@ -232,7 +232,7 @@ namespace BL
         {
             //לא גמור לבדוק זאת שוב
             var g = await conectDB.getAllGroup();//.Where(p => p.password == pass && p.name == name).FirstOrDefault();
-            return g.Where(p => p.password == pass && p.name == name).FirstOrDefault();
+            return g.Where(p => p.Password == pass && p.Name == name).FirstOrDefault();
         }
 
 
@@ -244,12 +244,12 @@ namespace BL
 
         public async static Task<Group> UpdateGroup1(Group gr)
         {
-            var thisGroup = await conectDB.getGroup(gr.password);
-            var thisStatus = thisGroup.password;
+            var thisGroup = await conectDB.getGroup(gr.Password);
+            var thisStatus = thisGroup.Password;
             var group = await conectDB.UpdateGroup(gr);
             if (group != null)
             {
-                if (group.status == true&&thisGroup.status==false)
+                if (group.Status == true&&thisGroup.Status==false)
                     await sendMessageOpenGroup(gr);
                 return gr;
             }
@@ -269,13 +269,13 @@ namespace BL
             client.Credentials = credentials;
             //can be obtained from your model
             MailMessage msg = new MailMessage();
-            var checkUser = await conectDB.getUser(gr.listManagment[0].phoneManagment);
-            msg.From = new MailAddress(checkUser.email.ToString());
+            var checkUser = await conectDB.getUser(gr.ListManagment[0].phoneManagment);
+            msg.From = new MailAddress(checkUser.Email.ToString());
             var userMail = user;
-            msg.To.Add(new MailAddress(user.email.ToString()));
-            msg.Subject = " " + gr.name;
+            msg.To.Add(new MailAddress(user.Email.ToString()));
+            msg.Subject = " " + gr.Name;
             msg.IsBodyHtml = true;
-            msg.Body = string.Format("<html><head>הודעה שנשלחה מהאפלקציה  followme</head><body><p>"+message+"</br>- " + user.firstName+" "+user.lastName+" "+user.phone + "</p></body>");
+            msg.Body = string.Format("<html><head>הודעה שנשלחה מהאפלקציה  followme</head><body><p>"+message+"</br>- " + user.FirstName+" "+user.LastName+" "+user.Phone + "</p></body>");
             try
             {
                 client.Send(msg);
@@ -293,7 +293,7 @@ namespace BL
         {
             try
             {
-                foreach (var item in group.users)
+                foreach (var item in group.Users)
                 {
 
                     await conectDB.UpdateUsersGroup(group);
@@ -365,7 +365,7 @@ namespace BL
 
         private async static Task<bool> sendMessageOpenGroup(Group gr)
         {
-            var users = await conectDB.getUserOfGroup(gr.password);
+            var users = await conectDB.getUserOfGroup(gr.Password);
             foreach (var item in users)
             {
                 var user = await conectDB.getUser(item.UserPhoneGroup);
@@ -379,12 +379,12 @@ namespace BL
         private async static Task<bool> sendMessageFarGroup(Group gr,UserProfile user,int CodeMess)//send message to all managment and user
         {
             user.UserMessageNeedGet.Clear();
-            user.UserMessageNeedGet.Add(new MessageUser() { Group = gr,UserName=user.lastName+" "+user.firstName, Message = gr.ErrorMessage.Where(p => p.CodeError == CodeMess).First() });
+            user.UserMessageNeedGet.Add(new MessageUser() { Group = gr,UserName=user.LastName+" "+user.FirstName, Message = gr.ErrorMessage.Where(p => p.CodeError == CodeMess).First() });
              await  conectDB.UpdateUserMeesage(user);
-            foreach (var item in gr.listManagment)
+            foreach (var item in gr.ListManagment)
             {
                 UserProfile userManagment =await conectDB.getUser(item.phoneManagment);
-                userManagment.UserMessageNeedGet.Add(new MessageUser() { Group = gr, UserName = user.lastName + " " + user.firstName, Message = gr.ErrorMessage.Where(p => p.CodeError == CodeMess - 4).First() });
+                userManagment.UserMessageNeedGet.Add(new MessageUser() { Group = gr, UserName = user.LastName + " " + user.FirstName, Message = gr.ErrorMessage.Where(p => p.CodeError == CodeMess - 4).First() });
                 await conectDB.UpdateUserMeesage(userManagment);
             }
             return true;
@@ -409,7 +409,7 @@ namespace BL
             {
                 if (item.DateBeginTrip < DateTime.Now)
                 {
-                    await conectDB.deleteGroup(item.password);
+                    await conectDB.deleteGroup(item.Password);
                 }
             }
             return true;

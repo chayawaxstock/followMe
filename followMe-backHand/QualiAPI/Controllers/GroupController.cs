@@ -229,14 +229,14 @@ namespace QualiAPI.Controllers
         {
             try
             {
-                var g = await BL.GroupS.getGroupByPass(pass.password);
-                List<string> users = g.listManagment.Select(p => p.phoneManagment).ToList();
+                var g = await BL.GroupS.getGroupByPass(pass.Password);
+                List<string> users = g.ListManagment.Select(p => p.phoneManagment).ToList();
                 List<Marker> markers = new List<Marker>();
                 foreach (var item in users)
                 {
                     UserProfile user = await conectDB.getUser(item);
                     if (user != null)
-                        markers.Add(user.marker);
+                        markers.Add(user.Marker);
                 }
 
 
@@ -254,14 +254,14 @@ namespace QualiAPI.Controllers
         {
             try
             {
-                var g = await BL.GroupS.getGroupByPass(pass.password);
-                List<string> users = g.users.Select(p => p.UserPhoneGroup).ToList();
+                var g = await BL.GroupS.getGroupByPass(pass.Password);
+                List<string> users = g.Users.Select(p => p.UserPhoneGroup).ToList();
                 List<Marker> markers = new List<Marker>();
                 foreach (var item in users)
                 {
                     UserProfile user = await conectDB.getUser(item);
                     if (user != null)
-                        markers.Add(user.marker);
+                        markers.Add(user.Marker);
                 }
 
 

@@ -37,7 +37,7 @@ namespace QualiAPI.Controllers
 
             List<UserProfile> users = new List<UserProfile>()
             {
-                new UserProfile(){Email="c0556777462@gmail.com",FirstName="חיה",Image="",LastName="וקסשטוק",Marker=new Marker(){Lat=32,lng=34,name="חיה וקסשטוק 0556777462"},Phone="0556777462",Status=true,UserMessageNeedGet=new List<DAL.Models.MessageUser>()},
+                new UserProfile(){Email="c0556777462@gmail.com",FirstName="חיה",Image="",LastName="וקסשטוק",Marker=new Marker(){lat=32,lng=34,name="חיה וקסשטוק 0556777462"},Phone="0556777462",Status=true,UserMessageNeedGet=new List<DAL.Models.MessageUser>()},
                 new UserProfile(){Email="zwakshtok@gmail.com",FirstName="זהבה",Image="",LastName="וקסשטוק",Marker=new Marker(){lat=36,lng=37,name="זהבה וקסשטוק 0548455899"},Phone="0548455899",Status=true,UserMessageNeedGet=new List<DAL.Models.MessageUser>()},
                 new UserProfile(){Email="ri775969@gmail.com",FirstName="רבקי",Image="",LastName="וקסשטוק",Marker=new Marker(){lat=37,lng=37,name="רבקי וקסשטוק 0556775969"},Phone="0556775969",Status=true,UserMessageNeedGet=new List<DAL.Models.MessageUser>()},
                 new UserProfile(){Email="7680287@gmail.com",FirstName="יעקב",Image="",LastName="ישראלי",Marker=new Marker(){lat=38,lng=34,name="יעקב ישראלי 0527680287"},Phone="0527680287",Status=true,UserMessageNeedGet=new List<DAL.Models.MessageUser>()},
