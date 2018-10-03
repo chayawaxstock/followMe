@@ -13,10 +13,9 @@ namespace DAL.Models
     {
         [BsonId]
         public ObjectId Id { get; set; }
-        public DateTime DateError { get; set; }
+        public DateTime DateError { get; set; }//Date send the error message
         public Group Group { get; set; }
         public UserProfile User { get; set; }
         public string Message { get; set; }
-
     }
 }
