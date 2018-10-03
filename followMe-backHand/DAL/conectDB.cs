@@ -8,12 +8,18 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using MongoDB.Bson;
+using System.Timers;
 
 namespace DAL
 {
 
     public class conectDB
     {
+        
+       const double interval60Minutes = 24 * 60 * 1000; // milliseconds to one day
+
+       static Timer checkForTime = new Timer(interval60Minutes);
+   
         public static List<MessageGroup> messagesToGroup = new List<MessageGroup>() { new MessageGroup() { MessageError="זהירות מטייל התרחק מקבוצתך",CodeError=1},
         new MessageGroup() { MessageError="זהירות מטייל לקראת התרחקות מקבוצתך",CodeError=2},
         new MessageGroup() { MessageError="נפתחה הקבוצה",CodeError=3},
@@ -24,6 +30,12 @@ namespace DAL
         new MessageGroup() { MessageError="מטייל מבקש עזרה",CodeError=8},
         new MessageGroup() { MessageError="מטייל הצטרף לקבוצת",CodeError=9},
         new MessageGroup() { MessageError="הודעה מותאמת אישית למטייל",CodeError=10}};
+      // checkForTime.Elapsed += new ElapsedEventHandler(checkForTime_Elapsed);
+           // checkForTime.Enabled = true;
+       static void checkForTime_Elapsed(object sender, ElapsedEventArgs e)
+        {
+           
+        }
 
         /// <summary>
         /// קבלת כל המשתמשים
@@ -31,6 +43,7 @@ namespace DAL
         /// <returns></returns>
         static async public Task<List<UserProfile>> getAllUsers()
         {
+           
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("followMe");
             var userCollection = database.GetCollection<UserProfile>("users");
@@ -321,7 +334,7 @@ namespace DAL
                     group.OkUsers = new List<UserInGroup>();
                     group.Status = false;
                     group.DefinitionGroup = new DefinitionGroup();
-                    group.DefinitionGroup.GoogleStatus = new GoogleStatus() { Code = 1, Status = "walking" };
+                    //group.DefinitionGroup.GoogleStatus = new GoogleStatus() { Code = 1, Status = "walking" };
                     group.DefinitionGroup.Distance = 500;
                     group.DefinitionGroup.eWhenStatusOpen = WhenStatusOpen.ONOPEN;
                     group.ErrorMessage = messagesToGroup;
