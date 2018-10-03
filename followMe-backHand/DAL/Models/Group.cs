@@ -4,28 +4,32 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
 namespace QualiAPI.Models
 {
-  public class Group
-  {
-    [BsonId]
-    public ObjectId id { get; set; }
-    public string name { get; set; }
-    public string description { get; set; }
-    public string password { get; set; } //סיסמת מנהל לשינוי הגדרות
-    public string Kod { get; set; }//קוד קבוצה רנדומלי
+    public class Group
+    {
+        private DateTime _dateBeginTrip;
+        private DateTime _dateEndTrip;
 
-    public bool status { get; set; }//מצב קבוצה פעיל או מכובה
-    public DefinitionGroup definitionGroup { get; set; }//הגדרות קבוצה
-
-    public List<ManagmentInGroup> listManagment { get; set; }//מנהלי קבוצה
-    public List<UserInGroup> users { get; set; }
-    public List<UserInGroup> OkUsers { get; set; }//מאשרי קבוצה????
-    public DateTime DateBeginTrip { get; set; }//date begin
-    public DateTime DateEndTrip { get; set; }//date end
-    public  List<MessageGroup> ErrorMessage { get; set; }//error list 
-  }
+        [BsonId]
+        public ObjectId Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Password { get; set; }
+        public string Code { get; set; }//Group code to allow the user to add himself to a trip-group 
+        public bool Status { get; set; }//Group status is active or turned off
+        public DefinitionGroup DefinitionGroup { get; set; }//Definition Group
+        public List<ManagmentInGroup> ListManagment { get; set; }//List of group tutorials
+        public List<UserInGroup> Users { get; set; }//List of travellers
+        public List<UserInGroup> OkUsers { get; set; }//List of travellers confirm their participation in the trip
+        public DateTime DateBeginTrip
+          { get => _dateBeginTrip; set => _dateBeginTrip = (value >= DateTime.Now) ? value : _dateBeginTrip = DateTime.Now; }//Date begin of the trip- group (check if date valid).
+        public DateTime DateEndTrip
+          { get => _dateEndTrip; set => _dateEndTrip = (value>DateTime.Now)?value:_dateEndTrip=DateTime.Now.AddDays(1); }//Date end of the trip- group (check if date valid).
+        public List<MessageGroup> ErrorMessage { get; set; }//List of custom error messages for each group
+    }
 }

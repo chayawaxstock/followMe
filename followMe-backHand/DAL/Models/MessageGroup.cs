@@ -8,7 +8,7 @@ namespace DAL.Models
 {
     public class MessageGroup
     {
-        public int KodError { get; set; }
+        public int CodeError { get; set; }
         public string MessageError { get; set; }
 
     }

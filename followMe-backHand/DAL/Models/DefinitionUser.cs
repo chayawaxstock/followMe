@@ -6,8 +6,8 @@ using System.Web;
 
 namespace QualiAPI.Models
 {
-  public class DefinitionUser
-  {
-    public bool SeeMeAll { get; set; }//כולם יכולים לראות אותי על המפה שלהם
-  }
+    public class DefinitionUser
+    {
+        public bool IsSeeMeAll { get; set; }//If the traveler allows everyone to see his place
+    }
 }

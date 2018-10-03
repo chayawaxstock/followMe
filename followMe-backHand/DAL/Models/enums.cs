@@ -8,6 +8,6 @@ namespace DAL.Models
 {
   [Flags]
   public enum eKindMessage { email=2,sms,whatsApp}
-  public enum WhenStatusOpen { onOpen, onDateBegin };
+  public enum WhenStatusOpen { ONOPEN, ONDATEBEGIN };
 
 }

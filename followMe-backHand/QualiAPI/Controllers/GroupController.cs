@@ -70,15 +70,15 @@ namespace QualiAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/checkKodGroup/{kod}/{phone}")]
-        public async Task<IHttpActionResult> checkKodGroup([FromUri] string kod, string phone)
+        [Route("api/checkCodeGroup/{Code}/{phone}")]
+        public async Task<IHttpActionResult> checkCodeGroup([FromUri] string Code, string phone)
         {
             try
             {
-                var gro = await BL.GroupS.checkKodGroup(kod);
+                var gro = await BL.GroupS.checkCodeGroup(Code);
                 if (gro != null)
                 {
-                    await BL.GroupS.AddToGroup(kod, phone);
+                    await BL.GroupS.AddToGroup(Code, phone);
                     return Ok(gro);
                 }
                 return Content(HttpStatusCode.BadRequest, "לא היתה אפשרות להצטרף לקבוצה");

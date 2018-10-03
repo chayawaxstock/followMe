@@ -14,16 +14,16 @@ namespace DAL
 
     public class conectDB
     {
-        public static List<MessageGroup> messagesToGroup = new List<MessageGroup>() { new MessageGroup() { MessageError="זהירות מטייל התרחק מקבוצתך",KodError=1},
-        new MessageGroup() { MessageError="זהירות מטייל לקראת התרחקות מקבוצתך",KodError=2},
-        new MessageGroup() { MessageError="נפתחה הקבוצה",KodError=3},
-        new MessageGroup() { MessageError="אישור הצטרפות לטיול",KodError=4},
-        new MessageGroup() { MessageError="סכנה התרחקת מקבוצתך",KodError=5},
-        new MessageGroup() { MessageError="זהירות אתה מתקרב לקראת התרחקות מהקבוצה",KodError=6},
-        new MessageGroup() { MessageError="נפתחה קבוצתך שאליה אתה רשום",KodError=7},
-        new MessageGroup() { MessageError="מטייל מבקש עזרה",KodError=8},
-        new MessageGroup() { MessageError="מטייל הצטרף לקבוצת",KodError=9},
-        new MessageGroup() { MessageError="הודעה מותאמת אישית למטייל",KodError=10}};
+        public static List<MessageGroup> messagesToGroup = new List<MessageGroup>() { new MessageGroup() { MessageError="זהירות מטייל התרחק מקבוצתך",CodeError=1},
+        new MessageGroup() { MessageError="זהירות מטייל לקראת התרחקות מקבוצתך",CodeError=2},
+        new MessageGroup() { MessageError="נפתחה הקבוצה",CodeError=3},
+        new MessageGroup() { MessageError="אישור הצטרפות לטיול",CodeError=4},
+        new MessageGroup() { MessageError="סכנה התרחקת מקבוצתך",CodeError=5},
+        new MessageGroup() { MessageError="זהירות אתה מתקרב לקראת התרחקות מהקבוצה",CodeError=6},
+        new MessageGroup() { MessageError="נפתחה קבוצתך שאליה אתה רשום",CodeError=7},
+        new MessageGroup() { MessageError="מטייל מבקש עזרה",CodeError=8},
+        new MessageGroup() { MessageError="מטייל הצטרף לקבוצת",CodeError=9},
+        new MessageGroup() { MessageError="הודעה מותאמת אישית למטייל",CodeError=10}};
 
         /// <summary>
         /// קבלת כל המשתמשים
@@ -50,7 +50,7 @@ namespace DAL
 
             var database = client.GetDatabase("followMe");
             var userCollection = database.GetCollection<UserProfile>("users");
-            var u = await userCollection.Find(a => a.phone == phone).ToListAsync();
+            var u = await userCollection.Find(a => a.Phone == phone).ToListAsync();
             if (u.Count == 0)
                 return null;
             else return u.First();
@@ -89,7 +89,7 @@ namespace DAL
                 var client = new MongoClient("mongodb://localhost:27017");
                 var database = client.GetDatabase("followMe");
                 var groupCollection = database.GetCollection<Group>("groups");
-                var rightGroup = await groupCollection.Find(a => a.password == password).ToListAsync();
+                var rightGroup = await groupCollection.Find(a => a.Password == password).ToListAsync();
                 if (rightGroup.Count > 0)
                 {
                     return rightGroup.First();
@@ -119,7 +119,7 @@ namespace DAL
             user.UserMessageNeedGet.Clear();
             try
             {
-                var filter = Builders<UserProfile>.Filter.Eq("phone", user.phone);
+                var filter = Builders<UserProfile>.Filter.Eq("phone", user.Phone);
                 var update = Builders<UserProfile>.Update.Set("UserMessageNeedGet", user.UserMessageNeedGet);
                 var result = await allUsers.UpdateOneAsync(filter, update);
                 return true;
@@ -146,12 +146,12 @@ namespace DAL
                 var client = new MongoClient("mongodb://localhost:27017");
                 var database = client.GetDatabase("followMe");
                 var groupCollection = database.GetCollection<Group>("groups");
-                List<Group> rightGroup = await groupCollection.Find(a => a.password.Equals(group.password)).ToListAsync();
+                List<Group> rightGroup = await groupCollection.Find(a => a.Password.Equals(group.Password)).ToListAsync();
                 if (rightGroup.Count == 0)
                     return null;
-                var filter = Builders<Group>.Filter.Eq("password", group.password);
-                var update = Builders<Group>.Update.Set("status", group.status).Set("DateBeginTrip", group.DateBeginTrip).Set("DateEndTrip", group.DateEndTrip).Set("users", group.users).Set("OkUsers", group.OkUsers)
-                            .Set("definitionGroup.distance", group.definitionGroup.distance).Set("definitionGroup.eWhenStatusOpen", group.definitionGroup.eWhenStatusOpen).Set("definitionGroup.googleStatus.Code", group.definitionGroup.googleStatus.Code);
+                var filter = Builders<Group>.Filter.Eq("password", group.Password);
+                var update = Builders<Group>.Update.Set("status", group.Status).Set("DateBeginTrip", group.DateBeginTrip).Set("DateEndTrip", group.DateEndTrip).Set("users", group.Users).Set("OkUsers", group.OkUsers)
+                            .Set("definitionGroup.distance", group.DefinitionGroup.Distance).Set("definitionGroup.eWhenStatusOpen", group.DefinitionGroup.eWhenStatusOpen).Set("definitionGroup.googleStatus.Code", group.DefinitionGroup.GoogleStatus.Code);
 
                 await groupCollection.UpdateOneAsync(filter, update);
                 return group;
@@ -172,10 +172,10 @@ namespace DAL
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("followMe");
             var allUsers = database.GetCollection<UserProfile>("users");
-            if (allUsers.Find(p => p.phone == user.phone) == null)
+            if (allUsers.Find(p => p.Phone == user.Phone) == null)
                 return false;
-            var filter = Builders<UserProfile>.Filter.Eq("phone", user.phone);
-            var update = Builders<UserProfile>.Update.Set("status", user.status);
+            var filter = Builders<UserProfile>.Filter.Eq("phone", user.Phone);
+            var update = Builders<UserProfile>.Update.Set("status", user.Status);
             await allUsers.UpdateOneAsync(filter, update);
             return true;
         }
@@ -190,9 +190,9 @@ namespace DAL
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("followMe");
             var allUsers = database.GetCollection<UserProfile>("users");
-            if (allUsers.Find(p => p.phone == user.phone) == null)
+            if (allUsers.Find(p => p.Phone == user.Phone) == null)
                 return false;
-            var filter = Builders<UserProfile>.Filter.Eq("phone", user.phone);
+            var filter = Builders<UserProfile>.Filter.Eq("phone", user.Phone);
             var update = Builders<UserProfile>.Update.Set("UserMessageNeedGet", user.UserMessageNeedGet);
             await allUsers.UpdateOneAsync(filter, update);
             return true;
@@ -211,13 +211,13 @@ namespace DAL
                 var database = client.GetDatabase("followMe");
                 var userCollection = database.GetCollection<UserProfile>("users");
                 //await userCollection.InsertOneAsync(new UserProfile() { email = "ggggggg", firstName = "bh fcg", id = new ObjectId() });
-                var u = await userCollection.Find(sb => sb.phone.Equals(user.phone)).ToListAsync();
+                var u = await userCollection.Find(sb => sb.Phone.Equals(user.Phone)).ToListAsync();
                 if (u.Count == 0)
                 {
-                    user.status = true;
-                    user.marker = new Marker();
-                    user.marker.name = user.firstName + " " + user.lastName;
-                    user.id = ObjectId.GenerateNewId();
+                    user.Status = true;
+                    user.Marker = new Marker();
+                    user.Marker.name = user.FirstName + " " + user.LastName;
+                    user.Id = ObjectId.GenerateNewId();
                     user.UserMessageNeedGet = new List<MessageUser>();
                     await userCollection.InsertOneAsync(user);
                     return true;
@@ -245,18 +245,18 @@ namespace DAL
                 var client = new MongoClient("mongodb://localhost:27017");
                 var database = client.GetDatabase("followMe");
                 var allGroups = database.GetCollection<Group>("groups");
-                var gr = await getGroup(group.password);
+                var gr = await getGroup(group.Password);
                 if (gr == null)
                     return false;
                 // gr.users = new List<UserInGroup>();
                 // gr.users = group.users;
-                var filter = Builders<Group>.Filter.Eq("password", group.password);
-                if (gr.users == null)
+                var filter = Builders<Group>.Filter.Eq("password", group.Password);
+                if (gr.Users == null)
                 {
-                    gr.users = new List<UserInGroup>();
+                    gr.Users = new List<UserInGroup>();
                 }
                 // gr.users.Add(new UserInGroup() { UserPhoneGroup = phone, Definition = new DefinitionUser() { SeeMeAll = true } });
-                var update = Builders<Group>.Update.Set("users", group.users);
+                var update = Builders<Group>.Update.Set("users", group.Users);
                 await allGroups.UpdateManyAsync(filter, update);
                 return true;
             }
@@ -281,7 +281,7 @@ namespace DAL
                 var database = client.GetDatabase("followMe");
                 var allGroups = database.GetCollection<Group>("groups");
                 var gr = await getGroup(pass);
-                var user = gr.users.Where(p => p.UserPhoneGroup == phone).FirstOrDefault();
+                var user = gr.Users.Where(p => p.UserPhoneGroup == phone).FirstOrDefault();
 
                 if (gr == null || user == null)
                     return false;
@@ -313,17 +313,17 @@ namespace DAL
                 var client = new MongoClient("mongodb://localhost:27017");
                 var database = client.GetDatabase("followMe");
                 var allGroups = database.GetCollection<Group>("groups");
-                var findGroup = await getGroup(group.password);
+                var findGroup = await getGroup(group.Password);
                 if (findGroup == null)
                 {
 
-                    group.users = new List<UserInGroup>();
+                    group.Users = new List<UserInGroup>();
                     group.OkUsers = new List<UserInGroup>();
-                    group.status = false;
-                    group.definitionGroup = new DefinitionGroup();
-                    group.definitionGroup.googleStatus = new GoogleStatus() { Code = 1, Status = "walking" };
-                    group.definitionGroup.distance = 500;
-                    group.definitionGroup.eWhenStatusOpen = WhenStatusOpen.onOpen;
+                    group.Status = false;
+                    group.DefinitionGroup = new DefinitionGroup();
+                    group.DefinitionGroup.GoogleStatus = new GoogleStatus() { Code = 1, Status = "walking" };
+                    group.DefinitionGroup.Distance = 500;
+                    group.DefinitionGroup.eWhenStatusOpen = WhenStatusOpen.ONOPEN;
                     group.ErrorMessage = messagesToGroup;
                     await allGroups.InsertOneAsync(group);
                     return group;
@@ -346,7 +346,7 @@ namespace DAL
             var gg = await getGroup(pass);
             if (gg == null)
                 throw new Exception("שגיאה בפרטי הקבוצה ");
-            return gg.users.ToList();
+            return gg.Users.ToList();
         }
         /// <summary>
         /// מנהלי קבוצה
@@ -358,7 +358,7 @@ namespace DAL
             var gg = await getGroup(pass);
             if (gg == null)
                 throw new Exception("שגיאה בפרטי הקבוצה ");
-            return gg.listManagment.ToList();
+            return gg.ListManagment.ToList();
         }
         /// <summary>
         /// מחיקת קבוצה
@@ -402,7 +402,7 @@ namespace DAL
                 var uu = await getUser(phone);
                 if (uu != null)
                 {
-                    Marker m = new Marker() { lat = lat, lng = lng, name = uu.lastName + " " + uu.firstName + " " + uu.phone };
+                    Marker m = new Marker() { lat = lat, lng = lng, name = uu.LastName + " " + uu.FirstName + " " + uu.Phone };
                     var filter = Builders<UserProfile>.Filter.Eq("phone", phone);
                     var update = Builders<UserProfile>.Update.Set("marker", m);
                     var result = await allUsers.UpdateOneAsync(filter, update);
@@ -432,15 +432,15 @@ namespace DAL
                 var client = new MongoClient("mongodb://localhost:27017");
                 var database = client.GetDatabase("followMe");
                 var allGroups = database.GetCollection<Group>("groups");
-                var groupCheck = await getGroup(group.password);
+                var groupCheck = await getGroup(group.Password);
                 if (groupCheck != null)
                 {
 
-                    if (groupCheck.listManagment.FirstOrDefault(p => p.phoneManagment == user.phone) != null)
+                    if (groupCheck.ListManagment.FirstOrDefault(p => p.phoneManagment == user.Phone) != null)
                     {
-                        groupCheck.listManagment.Remove(groupCheck.listManagment.First(p => p.phoneManagment == user.phone));
-                        var filter = Builders<Group>.Filter.Eq(s => s.password, group.password);
-                        var update = Builders<Group>.Update.Set("listManagment", groupCheck.listManagment);
+                        groupCheck.ListManagment.Remove(groupCheck.ListManagment.First(p => p.phoneManagment == user.Phone));
+                        var filter = Builders<Group>.Filter.Eq(s => s.Password, group.Password);
+                        var update = Builders<Group>.Update.Set("listManagment", groupCheck.ListManagment);
                         var result = await allGroups.UpdateOneAsync(filter, update);
                         return true;
                     }
@@ -502,7 +502,7 @@ namespace DAL
                 var database = client.GetDatabase("followMe");
                 var allUsers = database.GetCollection<UserProfile>("users");
                 user.UserMessageNeedGet.Add(new MessageUser() { Message = message, Group = group });
-                var filter = Builders<UserProfile>.Filter.Eq("phone", user.phone);
+                var filter = Builders<UserProfile>.Filter.Eq("phone", user.Phone);
                 var update = Builders<UserProfile>.Update.Set("UserMessageNeedGet", user.UserMessageNeedGet);
                 var result = await allUsers.UpdateOneAsync(filter, update);
                 return true;
@@ -534,9 +534,9 @@ namespace DAL
                     ManagmentInGroup managment = new ManagmentInGroup();//add new managment
                     managment.phoneManagment = user;
                     managment.ComeToTrip = true;
-                    g.listManagment.Add(managment);
+                    g.ListManagment.Add(managment);
                     var filter = Builders<Group>.Filter.Eq("password", group);
-                    var update = Builders<Group>.Update.AddToSet("listManagment", g.listManagment);
+                    var update = Builders<Group>.Update.AddToSet("listManagment", g.ListManagment);
                     var result = await allGroups.UpdateOneAsync(filter, update);
                     return true;
                 }

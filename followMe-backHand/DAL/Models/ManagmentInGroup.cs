@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
- public class ManagmentInGroup
-  {
-    public string  phoneManagment { get; set; }
-    public bool ComeToTrip { get; set; }//הצטרפות לטיול
-  }
+    public class ManagmentInGroup
+    {
+        public string phoneManagment { get; set; }
+        public bool ComeToTrip { get; set; }//If the managment come to trip
+    }
 }

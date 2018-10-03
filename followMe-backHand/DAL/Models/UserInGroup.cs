@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
- public class UserInGroup
-  {
-    public string UserPhoneGroup { get; set; }
-    public DefinitionUser Definition { get; set; }
-  }
+    public class UserInGroup
+    {
+        public string UserPhoneGroup { get; set; } //phone traveler-user
+        public DefinitionUser Definition { get; set; } //User-traveler settings for each group  
+    }
 }

@@ -242,8 +242,7 @@ export class UsersServiceProvider {
   }
   saveGroupUsers(): Promise<any> {
     console.log(this.getGroup());
-    console.log("saveeeeeeeeee");
-    return this.http.post("http://localhost:54599/api/updateUsersGroup", this.getGroup()).toPromise();
+    return this.http.post(`${this.baseUrl}updateUsersGroup`, this.getGroup()).toPromise();
   }
   getAllGroup(): Promise<any> {
     return this.http.get(this.baseUrl + "getAllGroups").map(p => p.json()).toPromise();

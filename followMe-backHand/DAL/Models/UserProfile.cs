@@ -9,18 +9,14 @@ namespace QualiAPI.Models
     public class UserProfile
     {
         [BsonId]
-        public ObjectId id { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string phone { get; set; }
-        public string email { get; set; }
+        public ObjectId Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
         public string Image { get; set; }
-        public bool status { get; set; }//האם הוא פעיל
-       
-        public List<MessageUser> UserMessageNeedGet { get; set; }//התראות שהלקוח צריך לקבל
-        public Marker marker { get; set; }
-
-        public eKindMessage kindMessage { get; set; }
-
+        public bool Status { get; set; }//If the traveler-user active (for example when the battery ends the traveler is not active.)   
+        public List<MessageUser> UserMessageNeedGet { get; set; }//List of error message that the traveler should receive
+        public Marker Marker { get; set; }//The location of the traveler-user on the map
     }
 }
