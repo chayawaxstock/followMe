@@ -10,6 +10,5 @@ namespace DAL.Models
     {
         public int CodeError { get; set; }
         public string MessageError { get; set; }
-
     }
 }

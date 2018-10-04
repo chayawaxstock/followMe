@@ -9,6 +9,6 @@ namespace QualiAPI.Models
     {
         public Double Lng { get; set; }//longitude
         public Double Lat { get; set; }//latitude
-        public string NameAndPhone { get; set; }//name user+ phone user
+        public string NameAndPhone { get; set; }//full name user+ phone user
     }
 }

@@ -28,9 +28,9 @@ namespace QualiAPI.Controllers
         [Route("api/Register")]
         public async Task<IHttpActionResult> register()
         {
+            var client = new MongoClient("mongodb://localhost:27017");
 
-
-            var client = new MongoClient("mongodb://chayawaxstock:chaya207322868!@cluster0-shard-00-00-ptwok.mongodb.net:27017,cluster0-shard-00-01-ptwok.mongodb.net:27017,cluster0-shard-00-02-ptwok.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true");
+            //  var client = new MongoClient("mongodb://chayawaxstock:chaya207322868!@cluster0-shard-00-00-ptwok.mongodb.net:27017,cluster0-shard-00-01-ptwok.mongodb.net:27017,cluster0-shard-00-02-ptwok.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true");
             var database = client.GetDatabase("followMe");
             var userCollection = database.GetCollection<UserProfile>("users");
 
