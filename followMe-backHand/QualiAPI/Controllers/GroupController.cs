@@ -230,7 +230,7 @@ namespace QualiAPI.Controllers
             try
             {
                 var g = await BL.GroupS.getGroupByPass(pass.Password);
-                List<string> users = g.ListManagment.Select(p => p.phoneManagment).ToList();
+                List<string> users = g.ListManagment.Select(p => p.PhoneManagment).ToList();
                 List<Marker> markers = new List<Marker>();
                 foreach (var item in users)
                 {

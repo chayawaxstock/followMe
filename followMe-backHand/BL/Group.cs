@@ -43,7 +43,7 @@ namespace BL
                        
                         if (item1.ComeToTrip == true)
                         {
-                            var managmentMarker = await conectDB.getUser(item1.phoneManagment);
+                            var managmentMarker = await conectDB.getUser(item1.PhoneManagment);
                             double latB = managmentMarker.Marker.Lat;
                             double longB = managmentMarker.Marker.Lng;
 
@@ -75,8 +75,8 @@ namespace BL
             List<Group> groupManagment = new List<Group>();
             foreach (var item in allGroup)
             {
-                if (item.ListManagment.FirstOrDefault(p => p.phoneManagment.Equals(phone)) != null && item.DateBeginTrip <= DateTime.Now && item.DateEndTrip >= DateTime.Now &&item.Status==true||
-                  item.ListManagment.FirstOrDefault(p => p.phoneManagment.Equals(phone)) != null && item.DateBeginTrip > DateTime.Now && item.Status == true)
+                if (item.ListManagment.FirstOrDefault(p => p.PhoneManagment.Equals(phone)) != null && item.DateBeginTrip <= DateTime.Now && item.DateEndTrip >= DateTime.Now &&item.Status==true||
+                  item.ListManagment.FirstOrDefault(p => p.PhoneManagment.Equals(phone)) != null && item.DateBeginTrip > DateTime.Now && item.Status == true)
                     groupManagment.Add(item);
             }
             return groupManagment;
@@ -269,7 +269,7 @@ namespace BL
             client.Credentials = credentials;
             //can be obtained from your model
             MailMessage msg = new MailMessage();
-            var checkUser = await conectDB.getUser(gr.ListManagment[0].phoneManagment);
+            var checkUser = await conectDB.getUser(gr.ListManagment[0].PhoneManagment);
             msg.From = new MailAddress(checkUser.Email.ToString());
             var userMail = user;
             msg.To.Add(new MailAddress(user.Email.ToString()));
@@ -383,7 +383,7 @@ namespace BL
              await  conectDB.UpdateUserMeesage(user);
             foreach (var item in gr.ListManagment)
             {
-                UserProfile userManagment =await conectDB.getUser(item.phoneManagment);
+                UserProfile userManagment =await conectDB.getUser(item.PhoneManagment);
                 userManagment.UserMessageNeedGet.Add(new MessageUser() { Group = gr, UserName = user.LastName + " " + user.FirstName, Message = gr.ErrorMessage.Where(p => p.CodeError == CodeMess - 4).First() });
                 await conectDB.UpdateUserMeesage(userManagment);
             }

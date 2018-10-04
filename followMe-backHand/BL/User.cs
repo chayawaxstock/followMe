@@ -40,7 +40,7 @@ namespace BL
             foreach (var item in all)
             {
                 UserProfile user = await conectDB.getUser(item.Phone);
-                if (group.Where(p => p.UserPhoneGroup == user.Phone).FirstOrDefault() == null && managment.Where(p => p.phoneManagment == user.Phone).FirstOrDefault() == null)
+                if (group.Where(p => p.UserPhoneGroup == user.Phone).FirstOrDefault() == null && managment.Where(p => p.PhoneManagment == user.Phone).FirstOrDefault() == null)
                     notInGroup.Add(item);
             }
             return notInGroup;

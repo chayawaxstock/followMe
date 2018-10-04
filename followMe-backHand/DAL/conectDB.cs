@@ -436,9 +436,9 @@ namespace DAL
                 if (groupCheck != null)
                 {
 
-                    if (groupCheck.ListManagment.FirstOrDefault(p => p.phoneManagment == user.Phone) != null)
+                    if (groupCheck.ListManagment.FirstOrDefault(p => p.PhoneManagment == user.Phone) != null)
                     {
-                        groupCheck.ListManagment.Remove(groupCheck.ListManagment.First(p => p.phoneManagment == user.Phone));
+                        groupCheck.ListManagment.Remove(groupCheck.ListManagment.First(p => p.PhoneManagment == user.Phone));
                         var filter = Builders<Group>.Filter.Eq(s => s.Password, group.Password);
                         var update = Builders<Group>.Update.Set("listManagment", groupCheck.ListManagment);
                         var result = await allGroups.UpdateOneAsync(filter, update);
@@ -532,7 +532,7 @@ namespace DAL
                 if (g != null)
                 {
                     ManagmentInGroup managment = new ManagmentInGroup();//add new managment
-                    managment.phoneManagment = user;
+                    managment.PhoneManagment = user;
                     managment.ComeToTrip = true;
                     g.ListManagment.Add(managment);
                     var filter = Builders<Group>.Filter.Eq("password", group);
