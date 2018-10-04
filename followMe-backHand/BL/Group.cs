@@ -35,8 +35,8 @@ namespace BL
 
                 if (item.Status == true&&item.DateBeginTrip<=DateTime.Now&&item.DateEndTrip>=DateTime.Now)
                 {
-                    double latA = user.Marker.lat;
-                    double longA = user.Marker.lng;
+                    double latA = user.Marker.Lat;
+                    double longA = user.Marker.Lng;
                     int d = 0;
                     foreach (var item1 in item.ListManagment)
                     {
@@ -44,8 +44,8 @@ namespace BL
                         if (item1.ComeToTrip == true)
                         {
                             var managmentMarker = await conectDB.getUser(item1.phoneManagment);
-                            double latB = managmentMarker.Marker.lat;
-                            double longB = managmentMarker.Marker.lng;
+                            double latB = managmentMarker.Marker.Lat;
+                            double longB = managmentMarker.Marker.Lng;
 
                             var locA = new GeoCoordinate(latA, longA);
                             var locB = new GeoCoordinate(latB, longB);

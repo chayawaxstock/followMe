@@ -8,18 +8,12 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using MongoDB.Bson;
-using System.Timers;
 
 namespace DAL
 {
 
     public class conectDB
     {
-        
-       const double interval60Minutes = 24 * 60 * 1000; // milliseconds to one day
-
-       static Timer checkForTime = new Timer(interval60Minutes);
-   
         public static List<MessageGroup> messagesToGroup = new List<MessageGroup>() { new MessageGroup() { MessageError="זהירות מטייל התרחק מקבוצתך",CodeError=1},
         new MessageGroup() { MessageError="זהירות מטייל לקראת התרחקות מקבוצתך",CodeError=2},
         new MessageGroup() { MessageError="נפתחה הקבוצה",CodeError=3},
@@ -30,12 +24,6 @@ namespace DAL
         new MessageGroup() { MessageError="מטייל מבקש עזרה",CodeError=8},
         new MessageGroup() { MessageError="מטייל הצטרף לקבוצת",CodeError=9},
         new MessageGroup() { MessageError="הודעה מותאמת אישית למטייל",CodeError=10}};
-      // checkForTime.Elapsed += new ElapsedEventHandler(checkForTime_Elapsed);
-           // checkForTime.Enabled = true;
-       static void checkForTime_Elapsed(object sender, ElapsedEventArgs e)
-        {
-           
-        }
 
         /// <summary>
         /// קבלת כל המשתמשים
@@ -43,7 +31,6 @@ namespace DAL
         /// <returns></returns>
         static async public Task<List<UserProfile>> getAllUsers()
         {
-           
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("followMe");
             var userCollection = database.GetCollection<UserProfile>("users");
@@ -229,7 +216,7 @@ namespace DAL
                 {
                     user.Status = true;
                     user.Marker = new Marker();
-                    user.Marker.name = user.FirstName + " " + user.LastName;
+                    user.Marker.NameAndPhone = user.FirstName + " " + user.LastName;
                     user.Id = ObjectId.GenerateNewId();
                     user.UserMessageNeedGet = new List<MessageUser>();
                     await userCollection.InsertOneAsync(user);
@@ -334,7 +321,7 @@ namespace DAL
                     group.OkUsers = new List<UserInGroup>();
                     group.Status = false;
                     group.DefinitionGroup = new DefinitionGroup();
-                    //group.DefinitionGroup.GoogleStatus = new GoogleStatus() { Code = 1, Status = "walking" };
+                    group.DefinitionGroup.GoogleStatus = new GoogleStatus() { Code = 1, Status = "walking" };
                     group.DefinitionGroup.Distance = 500;
                     group.DefinitionGroup.eWhenStatusOpen = WhenStatusOpen.ONOPEN;
                     group.ErrorMessage = messagesToGroup;
@@ -415,7 +402,7 @@ namespace DAL
                 var uu = await getUser(phone);
                 if (uu != null)
                 {
-                    Marker m = new Marker() { lat = lat, lng = lng, name = uu.LastName + " " + uu.FirstName + " " + uu.Phone };
+                    Marker m = new Marker() { Lat = lat, Lng = lng, NameAndPhone = uu.LastName + " " + uu.FirstName + " " + uu.Phone };
                     var filter = Builders<UserProfile>.Filter.Eq("phone", phone);
                     var update = Builders<UserProfile>.Update.Set("marker", m);
                     var result = await allUsers.UpdateOneAsync(filter, update);
