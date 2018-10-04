@@ -9,7 +9,7 @@ namespace DAL.Models
 {
     public class ManagmentInGroup
     {
-        public string phoneManagment { get; set; }
+        public string PhoneManagment { get; set; }
         public bool ComeToTrip { get; set; }//If the managment come to trip
     }
 }

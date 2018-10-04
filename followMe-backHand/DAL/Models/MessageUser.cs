@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
- public class MessageUser
-  {
-    public MessageGroup Message { get; set; }
-    public Group Group { get; set; }
-    public string UserName { get; set; }
-
+    public class MessageUser
+    {
+        public MessageGroup Message { get; set; }
+        public Group Group { get; set; }
+        public string UserName { get; set; }
     }
 }

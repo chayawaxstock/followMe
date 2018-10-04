@@ -19,7 +19,7 @@ namespace BL
         public async static Task<bool> sendMessageComplex(MessageUser messageUser )
         {
           var allUsers=  await conectDB.getAllUsers();
-          var correctUser = allUsers.FirstOrDefault(p => p.Marker.name.Equals(messageUser.UserName));
+          var correctUser = allUsers.FirstOrDefault(p => p.Marker.NameAndPhone.Equals(messageUser.UserName));
           return await conectDB.setNewErrorToUser(correctUser, messageUser.Message, messageUser.Group);
         }
     }
