@@ -8,20 +8,16 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using MongoDB.Bson;
+using System.Timers;
 
 namespace DAL
 {
 
     public static class conectDB
     {
-<<<<<<< HEAD
-        
-       const double interval60Minutes =6000; // milliseconds to one day
 
-       static Timer checkForTime = new Timer(interval60Minutes);
-   
-=======
->>>>>>> cdcbada7babe7226bb640feb6b5f4c0063ab63ab
+        static Timer TimerToExcuteFunction = new Timer(24 * 60 * 60 * 1000);//every date 
+
         public static List<MessageGroup> messagesToGroup = new List<MessageGroup>() { new MessageGroup() { MessageError="זהירות מטייל התרחק מקבוצתך",CodeError=1},
         new MessageGroup() { MessageError="זהירות מטייל לקראת התרחקות מקבוצתך",CodeError=2},
         new MessageGroup() { MessageError="נפתחה הקבוצה",CodeError=3},
@@ -32,21 +28,36 @@ namespace DAL
         new MessageGroup() { MessageError="מטייל מבקש עזרה",CodeError=8},
         new MessageGroup() { MessageError="מטייל הצטרף לקבוצת",CodeError=9},
         new MessageGroup() { MessageError="הודעה מותאמת אישית למטייל",CodeError=10}};
-<<<<<<< HEAD
-      // checkForTime.Elapsed += new ElapsedEventHandler(checkForTime_Elapsed);
-           // checkForTime.Enabled = true;
-       static void checkForTime_Elapsed(object sender, ElapsedEventArgs e)
+
+
+        async static void CheckForTime_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Console.WriteLine("gg");
+            var groups = await getAllGroup();
+            groups.ForEach(async group =>
+            {
+                if (group.DateEndTrip < DateTime.Now)
+                    try
+                    {
+                        await deleteGroup(group.Password);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+            });
         }
-=======
->>>>>>> cdcbada7babe7226bb640feb6b5f4c0063ab63ab
+
+        static conectDB()
+        {
+            TimerToExcuteFunction.Elapsed += new ElapsedEventHandler(CheckForTime_Elapsed);
+            TimerToExcuteFunction.Enabled = true;
+        }
 
         /// <summary>
         /// קבלת כל המשתמשים
         /// </summary>
         /// <returns></returns>
-        static async public Task<List<UserProfile>> getAllUsers()
+        async static public Task<List<UserProfile>> getAllUsers()
         {
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("followMe");
@@ -59,7 +70,7 @@ namespace DAL
         /// <summary>
         /// קבלת משתמש
         /// </summary>
-        /// <param name="phone">פלאפון</param>
+        /// <param name="phone">פלאפוlloן</param>
         /// <returns></returns>
         public async static Task<UserProfile> getUser(string phone)
         {
@@ -146,8 +157,8 @@ namespace DAL
                 return false;
 
             }
-           
-           
+
+
         }
 
 
@@ -338,7 +349,7 @@ namespace DAL
                     group.OkUsers = new List<UserInGroup>();
                     group.Status = false;
                     group.DefinitionGroup = new DefinitionGroup();
-                    group.DefinitionGroup.GoogleStatus = new GoogleStatus() { Code = 1, Status = "walking" };
+                    group.DefinitionGroup.GoogleStatus = GoogleStatus.WALKING;
                     group.DefinitionGroup.Distance = 500;
                     group.DefinitionGroup.eWhenStatusOpen = WhenStatusOpen.ONOPEN;
                     group.ErrorMessage = messagesToGroup;

@@ -31,14 +31,14 @@
   <Class Name="DAL.Models.ManagmentInGroup">
     <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>Models\ManagmentInGroup.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="QualiAPI.Models.Marker">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAEAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AQAAAAAAACAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Marker.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -73,7 +73,7 @@
   <Class Name="DAL.conectDB">
     <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAAQAAAAAFAAAAASKAAAEEAVADAAUEAAAAJBAIAEQ=</HashCode>
+      <HashCode>ABAAAQAAAAAFAAAAASCAAAEEAVACAAUEAAAAJBAIAEQ=</HashCode>
       <FileName>conectDB.cs</FileName>
     </TypeIdentifier>
   </Class>
