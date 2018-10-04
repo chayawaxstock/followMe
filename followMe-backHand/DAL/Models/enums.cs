@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 namespace DAL.Models
 {
   public enum WhenStatusOpen { ONOPEN, ONDATEBEGIN };
+    public enum GoogleStatus { WALKING,DRIVINGCAR,TRAVELBUS,AIRPLANE,RIDEBIKE}
 
 }

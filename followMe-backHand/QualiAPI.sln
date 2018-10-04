@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QualiAPI", "QualiAPI\QualiAPI.csproj", "{CE23F917-4189-4A77-B484-37B1F855C21C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FollowMeAPI", "QualiAPI\FollowMeAPI.csproj", "{CE23F917-4189-4A77-B484-37B1F855C21C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{9DDFB14D-A43E-4D30-AD44-0E18C14F36BF}"
 EndProject

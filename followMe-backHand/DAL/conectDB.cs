@@ -13,10 +13,10 @@ using System.Timers;
 namespace DAL
 {
 
-    public class conectDB
+    public static class conectDB
     {
         
-       const double interval60Minutes = 24 * 60 * 1000; // milliseconds to one day
+       const double interval60Minutes =6000; // milliseconds to one day
 
        static Timer checkForTime = new Timer(interval60Minutes);
    
@@ -34,7 +34,7 @@ namespace DAL
            // checkForTime.Enabled = true;
        static void checkForTime_Elapsed(object sender, ElapsedEventArgs e)
         {
-           
+            Console.WriteLine("gg");
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace DAL
                     return null;
                 var filter = Builders<Group>.Filter.Eq("password", group.Password);
                 var update = Builders<Group>.Update.Set("status", group.Status).Set("DateBeginTrip", group.DateBeginTrip).Set("DateEndTrip", group.DateEndTrip).Set("users", group.Users).Set("OkUsers", group.OkUsers)
-                            .Set("definitionGroup.distance", group.DefinitionGroup.Distance).Set("definitionGroup.eWhenStatusOpen", group.DefinitionGroup.eWhenStatusOpen).Set("definitionGroup.googleStatus.Code", group.DefinitionGroup.GoogleStatus.Code);
+                            .Set("definitionGroup.distance", group.DefinitionGroup.Distance).Set("definitionGroup.eWhenStatusOpen", group.DefinitionGroup.eWhenStatusOpen).Set("definitionGroup.googleStatus", group.DefinitionGroup.GoogleStatus);
 
                 await groupCollection.UpdateOneAsync(filter, update);
                 return group;
